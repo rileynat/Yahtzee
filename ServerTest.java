@@ -1,5 +1,7 @@
 package eecs285.proj4.rileynat;
 
+import java.util.Date;
+
 public class ServerTest
 {
 
@@ -17,6 +19,18 @@ public class ServerTest
       System.out.println("Recevied message from client: " + recvdStr);
       theServer.sendString("Back at ya client");
 
+      Date currentDate = new Date();
+      long timestamp_long = currentDate.getTime();
+      int timestamp = (int) timestamp_long & 0xFFFFFFFF;
+      // System.out.print(timestamp);
+
+      // System.out.print('\n');
+      // theServer.sendInt(timestamp);
+      // theServer.sendInt(~(timestamp & 0xF0F0F0F0));
+      // theServer.sendInt(timestamp & 0x0F0F0F0F);
+
+      int starting = theServer.waitForInt();
+      System.out.print(starting);
    }
 
 }

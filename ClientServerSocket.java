@@ -92,4 +92,44 @@ public class ClientServerSocket
       return (receivedString);
    }
 
+   public int recvInt()
+   {
+      int recvInt = 0;
+      try {
+         recvInt = inData.readInt();
+      } catch (IOException ioe) {
+         out.println("ERROR: receiving int from socket");
+         System.exit(10);
+      }
+      return (recvInt);
+   }
+
+   public void sendInt(int inSendInt)
+   {
+      try {
+         outData.writeInt(inSendInt);
+      } catch (IOException ioe) {
+         System.out.println("ERROR: sending int");
+         System.exit(11);
+      }
+   }
+
+   public int waitForInt()
+   {
+      int recvInt = 0;
+      boolean success = false;
+      while (!success) {
+         try {
+            recvInt = inData.readInt();
+            success = true;
+            // out.print("waiting for int\n");
+         } catch (IOException ioe) {
+            success = false;
+            // out.println("ERROR: waiting for int from socket");
+         }
+      }
+      // out.printf("recieved int %d\n", recvInt);
+      return (recvInt);
+   }
+
 }
