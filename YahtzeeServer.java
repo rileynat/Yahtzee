@@ -3,8 +3,9 @@ package eecs285.proj4.rileynat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ServerTest
+public class YahtzeeServer
 {
+
    static ArrayList<playerNameAndScore> players;
 
    public final static String IPADDRESS = "67.194.32.122";
@@ -16,11 +17,16 @@ public class ServerTest
 
       ClientServerSocket theServer;
       String recvdStr;
-      theServer = new ClientServerSocket(IPADDRESS, 45000);
+      theServer = new ClientServerSocket(IPADDRESS, 45546);
       theServer.startServer();
+      // theServer.getClients(3);
       recvdStr = theServer.recvString();
       System.out.println("Recevied message from client: " + recvdStr);
-      theServer.sendString("Back at ya client");
+      recvdStr = theServer.recvString();
+      System.out.println("Recevied message from client: " + recvdStr);
+      recvdStr = theServer.recvString();
+      System.out.println("Recevied message from client: " + recvdStr);
+      theServer.sendString("Back at ya client0");
 
       Date currentDate = new Date();
       long timestamp_long = currentDate.getTime();

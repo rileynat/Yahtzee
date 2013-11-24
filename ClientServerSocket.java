@@ -7,6 +7,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class ClientServerSocket
@@ -16,6 +17,7 @@ public class ClientServerSocket
    private Socket socket;
    private DataOutputStream outData;
    private DataInputStream inData;
+   private ArrayList<ServerClient> clients;
 
    public ClientServerSocket(String inIPAddr, int inPortNum)
    {
@@ -34,6 +36,7 @@ public class ClientServerSocket
          inData = new DataInputStream(socket.getInputStream());
       } catch (IOException ioe) {
          out.println("ERROR: Unable to connect - " + "is the server running?");
+         out.printf("error message %s\n", ioe);
          System.exit(10);
       }
    }
@@ -48,6 +51,31 @@ public class ClientServerSocket
          outData = new DataOutputStream(socket.getOutputStream());
          inData = new DataInputStream(socket.getInputStream());
          out.println("Client connection accepted");
+      } catch (IOException ioe) {
+         out.println("ERROR: Caught exception starting server");
+         System.exit(7);
+      }
+   }
+
+   public void getClients(int numClients)
+   {
+      clients = new ArrayList<ServerClient>();
+      if (numClients <= 0) {
+         out.println("number of Clients is invalid");
+         System.exit(7);
+      }
+      ServerSocket serverSock;
+      try {
+         serverSock = new ServerSocket(portNum);
+         for (int i = 0; i < numClients; i++) {
+            out.printf("Waiting for number client%d to connect...\n", i);
+            socket = serverSock.accept();
+            ServerClient client = new ServerClient();
+            client.outData = new DataOutputStream(socket.getOutputStream());
+            client.inData = new DataInputStream(socket.getInputStream());
+            clients.add(client);
+            out.printf("Client%d connection accepted\n", i);
+         }
       } catch (IOException ioe) {
          out.println("ERROR: Caught exception starting server");
          System.exit(7);
@@ -130,6 +158,12 @@ public class ClientServerSocket
       }
       // out.printf("recieved int %d\n", recvInt);
       return (recvInt);
+   }
+
+   public class ServerClient
+   {
+      public DataOutputStream outData;
+      public DataInputStream inData;
    }
 
 }
