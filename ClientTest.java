@@ -9,7 +9,7 @@ public class ClientTest
       // TODO Auto-generated method stub
       ClientServerSocket theClient;
       String recvdStr;
-      theClient = new ClientServerSocket(IPADDRESS, 45547);
+      theClient = new ClientServerSocket(IPADDRESS, 45545);
       theClient.startClient();
       theClient.sendString("Hello to the server!");
 
@@ -39,7 +39,7 @@ public class ClientTest
       recvdStr = theClient.recvString();
       System.out.println("Received this message from server: " + recvdStr);
 
-      for (long i = 0; i < 2054775807; i++) {
+      for (long i = 0; i < 275807; i++) {
          System.out.print('G');
       }
       theClient.sendInt(40);
