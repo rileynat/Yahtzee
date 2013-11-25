@@ -57,25 +57,20 @@ public class ClientServerSocket
       }
    }
 
-   public void getClients(int numClients)
+   public void getClient()
    {
       clients = new ArrayList<ServerClient>();
-      if (numClients <= 0) {
-         out.println("number of Clients is invalid");
-         System.exit(7);
-      }
       ServerSocket serverSock;
       try {
+
          serverSock = new ServerSocket(portNum);
-         for (int i = 0; i < numClients; i++) {
-            out.printf("Waiting for number client%d to connect...\n", i);
-            socket = serverSock.accept();
-            ServerClient client = new ServerClient();
-            client.outData = new DataOutputStream(socket.getOutputStream());
-            client.inData = new DataInputStream(socket.getInputStream());
-            clients.add(client);
-            out.printf("Client%d connection accepted\n", i);
-         }
+         out.printf("Waiting for number client to connect...\n");
+         socket = serverSock.accept();
+         ServerClient client = new ServerClient();
+         client.outData = new DataOutputStream(socket.getOutputStream());
+         client.inData = new DataInputStream(socket.getInputStream());
+         clients.add(client);
+         out.printf("Client connection accepted\n");
       } catch (IOException ioe) {
          out.println("ERROR: Caught exception starting server");
          System.exit(7);
@@ -94,6 +89,54 @@ public class ClientServerSocket
          System.exit(-1);
       }
       return (success);
+   }
+
+   public boolean sendStringToAll(String strToSend)
+   {
+      boolean success = false;
+      if (clients == null) {
+         return success;
+      }
+      try {
+         for (ServerClient client : clients) {
+            client.outData.writeBytes(strToSend);
+            client.outData.writeByte(0);
+         }
+         success = true;
+      } catch (IOException e) {
+         System.out.println("Caught IOException Writing To Socket Stream!");
+         System.exit(-1);
+      }
+      return (success);
+   }
+
+   public String waitForString()
+   {
+      Vector<Byte> byteVec = new Vector<Byte>();
+      byte[] byteAry;
+      byte recByte;
+      String receivedString = "";
+      for (ServerClient client : clients) {
+         try {
+            recByte = client.inData.readByte();
+            while (recByte != 0) {
+               byteVec.add(recByte);
+               recByte = client.inData.readByte();
+            }
+            byteAry = new byte[byteVec.size()];
+            for (int ind = 0; ind < byteVec.size(); ind++) {
+               byteAry[ind] = byteVec.elementAt(ind).byteValue();
+            }
+            receivedString = new String(byteAry);
+            if (receivedString.length() > 0) {
+               return receivedString;
+            }
+         } catch (IOException ioe) {
+            out.println("ERROR: receiving string from socket");
+            System.exit(8);
+         }
+      }
+      return (receivedString);
    }
 
    public String recvString()
@@ -142,18 +185,35 @@ public class ClientServerSocket
       }
    }
 
+   public void sendIntToAll(int inSendInt)
+   {
+      try {
+         for (ServerClient client : clients) {
+            client.outData.writeInt(inSendInt);
+         }
+      } catch (IOException ioe) {
+         System.out.println("ERROR: sending int");
+         System.exit(11);
+      }
+   }
+
    public int waitForInt()
    {
       int recvInt = 0;
       boolean success = false;
       while (!success) {
-         try {
-            recvInt = inData.readInt();
-            success = true;
-            // out.print("waiting for int\n");
-         } catch (IOException ioe) {
-            success = false;
-            // out.println("ERROR: waiting for int from socket");
+         for (ServerClient client : clients) {
+            try {
+               recvInt = client.inData.readInt();
+               success = true;
+               // out.print("waiting for int\n");
+            } catch (IOException ioe) {
+               success = false;
+               // out.println("ERROR: waiting for int from socket");
+            }
+            if (success) {
+               return recvInt;
+            }
          }
       }
       // out.printf("recieved int %d\n", recvInt);
@@ -162,6 +222,7 @@ public class ClientServerSocket
 
    public class ServerClient
    {
+      public ServerSocket serverSock;
       public DataOutputStream outData;
       public DataInputStream inData;
    }

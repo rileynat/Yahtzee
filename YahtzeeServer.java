@@ -1,51 +1,71 @@
 package eecs285.proj4.rileynat;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class YahtzeeServer
 {
 
-   static ArrayList<playerNameAndScore> players;
+   static ArrayList<PlayerNameAndScore> players;
 
-   public final static String IPADDRESS = "67.194.32.122";
+   public final static String IPADDRESS = "10.0.0.21";
 
    public static void main(String[] args)
    {
       // TODO Auto-generated method stub
-      players = new ArrayList<playerNameAndScore>();
+      players = new ArrayList<PlayerNameAndScore>();
+      int numClients = 1;
 
       ClientServerSocket theServer;
       String recvdStr;
-      theServer = new ClientServerSocket(IPADDRESS, 45546);
-      theServer.startServer();
-      // theServer.getClients(3);
-      recvdStr = theServer.recvString();
-      System.out.println("Recevied message from client: " + recvdStr);
-      recvdStr = theServer.recvString();
-      System.out.println("Recevied message from client: " + recvdStr);
-      recvdStr = theServer.recvString();
-      System.out.println("Recevied message from client: " + recvdStr);
-      theServer.sendString("Back at ya client0");
+      theServer = new ClientServerSocket(IPADDRESS, 45547);
+      // theServer.startServer();
+      for (int i = 0; i < numClients; i++) {
+         theServer.getClient();
+         recvdStr = theServer.waitForString();
+         System.out.println("Recevied message from client: " + recvdStr);
+         PlayerNameAndScore player = new PlayerNameAndScore();
+         player.name = recvdStr;
+         player.score = 0;
+         players.add(player);
+      }
 
-      Date currentDate = new Date();
-      long timestamp_long = currentDate.getTime();
-      int timestamp = (int) timestamp_long & 0xFFFFFFFF;
-      System.out.print(timestamp);
+      theServer.sendStringToAll("Number players");
+      theServer.sendIntToAll(numClients);
+
+      theServer.sendStringToAll("Client List:");
+      for (PlayerNameAndScore player : players) {
+         theServer.sendStringToAll(player.name);
+      }
+
+      // Date currentDate = new Date();
+      // long timestamp_long = currentDate.getTime();
+      // int timestamp = (int) timestamp_long & 0xFFFFFFFF;
+      // System.out.print(timestamp);
+
+      theServer.sendStringToAll("Starting name:");
+      theServer.sendStringToAll(players.get(0).name);
+
+      int currentPlayer = 0;
+      while (true) {
+
+         int score = theServer.waitForInt();
+         System.out.println(score);
+         players.get(currentPlayer).score = score;
+         theServer.sendStringToAll("Update Score");
+         for (PlayerNameAndScore player : players) {
+            theServer.sendIntToAll(player.score);
+         }
+
+         currentPlayer = (currentPlayer + 1) % players.size();
+      }
 
       // System.out.print('\n');
       // theServer.sendInt(timestamp);
       // theServer.sendInt(~(timestamp & 0xF0F0F0F0));
       // theServer.sendInt(timestamp & 0x0F0F0F0F);
 
-      int starting = theServer.waitForInt();
-      System.out.print(starting);
-   }
-
-   public class playerNameAndScore
-   {
-      public String name;
-      public int score;
+      // int starting = theServer.waitForInt();
+      // System.out.print(starting);
    }
 
 }
