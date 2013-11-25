@@ -25,7 +25,7 @@ import javax.swing.border.Border;
 public class Yahtzee_GUI extends JFrame {
 	private JButton roll_button;
 	private JToggleButton [] dice_buttons;
-	private Scoreboard playerScorecard;
+	private Scorecard playerScorecard;
 	private Dice dice;
 	private JLabel[] scores;
 	private ImageIcon[] dice_pictures;
