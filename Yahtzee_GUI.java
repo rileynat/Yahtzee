@@ -1,4 +1,4 @@
-package eecs285.proj4.keyserja;
+package eecs285.proj4.Yahtzee;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -25,7 +25,7 @@ import javax.swing.border.Border;
 public class Yahtzee_GUI extends JFrame {
 	private JButton roll_button;
 	private JToggleButton [] dice_buttons;
-	private Scorecard playerScorecard;
+	private Scoreboard playerScorecard;
 	private Dice dice;
 	private JLabel[] scores;
 	private ImageIcon[] dice_pictures;
@@ -81,7 +81,7 @@ public class Yahtzee_GUI extends JFrame {
 	    try
 	    {
 	      myDir = new File(getClass().getClassLoader().getResource(
-	             "eecs285/proj4/keyserja/Dice_pictures").toURI());
+	             "eecs285/proj4/Yahtzee/Dice_pictures").toURI());
 	    }
 	    catch (URISyntaxException uriExcep)
 	    {

@@ -1,4 +1,4 @@
-package eecs285.proj4.rileynat;
+package eecs285.proj4.Yahtzee;
 
 import java.util.ArrayList;
 import java.util.Date;

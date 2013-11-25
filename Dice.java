@@ -1,4 +1,4 @@
-package eecs285.proj4.keyserja;
+package eecs285.proj4.Yahtzee;
 
 import java.util.Random;
 
