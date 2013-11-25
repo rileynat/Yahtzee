@@ -1,4 +1,4 @@
-package eecs285.proj4.Yahtzee
+package eecs285.proj4.Yahtzee;
 
 import javax.swing.JFrame;
 
