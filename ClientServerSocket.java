@@ -17,6 +17,7 @@ public class ClientServerSocket
    private Socket socket;
    private DataOutputStream outData;
    private DataInputStream inData;
+   ServerSocket serverSock;
    private ArrayList<ServerClient> clients;
 
    public ClientServerSocket(String inIPAddr, int inPortNum)
@@ -60,11 +61,12 @@ public class ClientServerSocket
    public void getClient()
    {
       clients = new ArrayList<ServerClient>();
-      ServerSocket serverSock;
-      try {
 
-         serverSock = new ServerSocket(portNum);
-         out.printf("Waiting for number client to connect...\n");
+      try {
+         if (serverSock == null) {
+            serverSock = new ServerSocket(portNum);
+         }
+         out.printf("Waiting for client to connect...\n");
          socket = serverSock.accept();
          ServerClient client = new ServerClient();
          client.outData = new DataOutputStream(socket.getOutputStream());
@@ -72,7 +74,7 @@ public class ClientServerSocket
          clients.add(client);
          out.printf("Client connection accepted\n");
       } catch (IOException ioe) {
-         out.println("ERROR: Caught exception starting server");
+         out.println("ERROR: Caught exception getting client");
          System.exit(7);
       }
    }
@@ -206,7 +208,6 @@ public class ClientServerSocket
             try {
                recvInt = client.inData.readInt();
                success = true;
-               // out.print("waiting for int\n");
             } catch (IOException ioe) {
                success = false;
                // out.println("ERROR: waiting for int from socket");

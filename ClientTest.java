@@ -2,14 +2,15 @@ package eecs285.proj4.rileynat;
 
 public class ClientTest
 {
-   public final static String IPADDRESS = "10.0.0.21";
+   public final static String IPADDRESS = "67.194.113.232";
+   public final static String FXBIPADDRESS = "67.194.113.232";
 
    public static void main(String[] args)
    {
       // TODO Auto-generated method stub
       ClientServerSocket theClient;
       String recvdStr;
-      theClient = new ClientServerSocket(IPADDRESS, 45545);
+      theClient = new ClientServerSocket(IPADDRESS, 45547);
       theClient.startClient();
       theClient.sendString("Hello to the server!");
 
