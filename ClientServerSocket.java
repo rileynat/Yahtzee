@@ -1,4 +1,4 @@
-package eecs285.proj4.rileynat;
+package eecs285.proj4.Yahtzee
 
 import static java.lang.System.out;
 
