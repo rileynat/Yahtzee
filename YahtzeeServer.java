@@ -1,13 +1,14 @@
 package eecs285.proj4.rileynat;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class YahtzeeServer
 {
 
    static ArrayList<PlayerNameAndScore> players;
 
-   public final static String IPADDRESS = "67.194.113.232";
+   public final static String IPADDRESS = "67.194.7.231";
    public final static String FXBIPADDRESS = "67.194.113.232";
 
    public static void main(String[] args)
@@ -18,7 +19,7 @@ public class YahtzeeServer
 
       ClientServerSocket theServer;
       String recvdStr;
-      theServer = new ClientServerSocket(IPADDRESS, 45547);
+      theServer = new ClientServerSocket(IPADDRESS, 45548);
       // theServer.startServer();
       for (int i = 0; i < numClients; i++) {
          theServer.getClient();
@@ -38,10 +39,10 @@ public class YahtzeeServer
          theServer.sendStringToAll(player.name);
       }
 
-      // Date currentDate = new Date();
-      // long timestamp_long = currentDate.getTime();
-      // int timestamp = (int) timestamp_long & 0xFFFFFFFF;
-      // System.out.print(timestamp);
+      Date currentDate = new Date();
+      long timestamp_long = currentDate.getTime();
+      int timestamp = (int) timestamp_long & 0xFFFFFFFF;
+      System.out.print(timestamp);
 
       theServer.sendStringToAll("Starting name:");
       theServer.sendStringToAll(players.get(0).name);
@@ -64,7 +65,7 @@ public class YahtzeeServer
       // theServer.sendInt(timestamp);
       // theServer.sendInt(~(timestamp & 0xF0F0F0F0));
       // theServer.sendInt(timestamp & 0x0F0F0F0F);
-
+      //
       // int starting = theServer.waitForInt();
       // System.out.print(starting);
    }

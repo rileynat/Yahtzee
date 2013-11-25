@@ -2,7 +2,7 @@ package eecs285.proj4.rileynat;
 
 public class ClientTest
 {
-   public final static String IPADDRESS = "67.194.113.232";
+   public final static String IPADDRESS = "67.194.7.231";
    public final static String FXBIPADDRESS = "67.194.113.232";
 
    public static void main(String[] args)
@@ -10,7 +10,7 @@ public class ClientTest
       // TODO Auto-generated method stub
       ClientServerSocket theClient;
       String recvdStr;
-      theClient = new ClientServerSocket(IPADDRESS, 45547);
+      theClient = new ClientServerSocket(IPADDRESS, 45548);
       theClient.startClient();
       theClient.sendString("Hello to the server!");
 
@@ -22,7 +22,13 @@ public class ClientTest
       // System.out.println("timestamp3: " + result);
 
       // theClient.sendInt(2634);
+
+      System.out.println("test before recieving string");
       recvdStr = theClient.recvString();
+      while (recvdStr != "") {
+         recvdStr = theClient.recvString();
+         System.out.print(recvdStr);
+      }
       System.out.println("Received this message from server: " + recvdStr);
       int numPlayers = theClient.recvInt();
       System.out.println("Received number of players from server: "

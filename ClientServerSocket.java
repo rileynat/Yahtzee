@@ -160,7 +160,6 @@ public class ClientServerSocket
          receivedString = new String(byteAry);
       } catch (IOException ioe) {
          out.println("ERROR: receiving string from socket");
-         System.exit(8);
       }
       return (receivedString);
    }
