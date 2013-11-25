@@ -1,4 +1,4 @@
-package eecs285.proj4.tjchamp;
+package eecs285.proj4.tjchamp.Yahtzee;
 
 import java.util.*;
 
@@ -175,6 +175,9 @@ public class Scoreboard {
 		
 		if(set.size() == 5)
 			score = 40;
+		
+		if(set.contains(1) && set.contains(6))
+			score = 0;
 		
 		return score;
 	}
