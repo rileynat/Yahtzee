@@ -35,6 +35,8 @@ public class Yahtzee_GUI extends JFrame {
 	private JPanel [] player_panels;
 	private JLabel [] player_score_labels;
 		
+	//this is just a test
+	
 	private final Border BLACKLINE = BorderFactory.createLineBorder(Color.black);
 	private final Border REDLINE= BorderFactory.createLineBorder(Color.red);
 	
