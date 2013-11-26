@@ -137,8 +137,7 @@ public class ClientServerSocket
                return receivedString;
             }
          } catch (IOException ioe) {
-            out.println("ERROR: receiving string from socket");
-            System.exit(8);
+            out.println("ERROR: waiting for string from socket");
          }
       }
       return (receivedString);

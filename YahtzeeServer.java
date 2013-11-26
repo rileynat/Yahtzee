@@ -27,7 +27,7 @@ public class YahtzeeServer
          System.out.println("Recevied message from client: " + recvdStr);
          PlayerNameAndScore player = new PlayerNameAndScore();
          player.name = recvdStr;
-         player.score = 0;
+         player.score = 2;
          players.add(player);
       }
 
@@ -48,17 +48,25 @@ public class YahtzeeServer
       theServer.sendStringToAll(players.get(0).name);
 
       int currentPlayer = 0;
+      String str = "";
       while (true) {
 
-         int score = theServer.waitForInt();
-         System.out.println(score);
-         players.get(currentPlayer).score = score;
-         theServer.sendStringToAll("Update Score");
-         for (PlayerNameAndScore player : players) {
-            theServer.sendIntToAll(player.score);
+         while (str == "") {
+            str = theServer.waitForString();
          }
 
-         currentPlayer = (currentPlayer + 1) % players.size();
+         if (str.equals("Send Score")) {
+            int score = theServer.waitForInt();
+            System.out.println(score);
+            players.get(currentPlayer).score = score;
+            theServer.sendStringToAll("Update Score");
+            for (PlayerNameAndScore player : players) {
+               theServer.sendIntToAll(player.score);
+               System.out.println(" " + score);
+            }
+            currentPlayer = (currentPlayer + 1) % players.size();
+         }
+
       }
 
       // System.out.print('\n');
@@ -69,5 +77,4 @@ public class YahtzeeServer
       // int starting = theServer.waitForInt();
       // System.out.print(starting);
    }
-
 }

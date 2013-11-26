@@ -47,10 +47,24 @@ public class ClientTest
       recvdStr = theClient.recvString();
       System.out.println("Received this message from server: " + recvdStr);
 
-      // for (long i = 0; i < 275807; i++) {
-      // System.out.print('G');
-      // }
-      theClient.sendInt(40);
+      if (recvdStr.equals("Hello to the server!")) {
+         for (long i = 0; i < 5807; i++) {
+            System.out.print('G');
+         }
+         theClient.sendString("Send Score");
+         theClient.sendInt(40);
+      }
+
+      recvdStr = "";
+      while (recvdStr == "") {
+         recvdStr = theClient.recvString();
+      }
+      System.out.println("Received this message from server: " + recvdStr);
+      int score;
+      for (int i = 0; i < numPlayers; i++) {
+         score = theClient.recvInt();
+         System.out.println("Received player score from server: " + score);
+      }
    }
 
 }
