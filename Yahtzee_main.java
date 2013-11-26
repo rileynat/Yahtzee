@@ -12,3 +12,4 @@ public class Yahtzee_main {
 		JFrame.EXIT_ON_CLOSE);
 	}
 }
+//
