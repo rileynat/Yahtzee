@@ -27,7 +27,6 @@ public class Yahtzee_GUI extends JFrame {
 	private JToggleButton [] dice_buttons;
 	private Scoreboard playerScorecard;
 	private Dice dice;
-	private JLabel[] scores;
 	private ImageIcon[] dice_pictures;
 	private Yahtzee_Listener listener;
 	private JButton [] score_buttons;
@@ -40,7 +39,7 @@ public class Yahtzee_GUI extends JFrame {
 	private final Border BLACKLINE = BorderFactory.createLineBorder(Color.black);
 	private final Border REDLINE= BorderFactory.createLineBorder(Color.red);
 	
-	public Yahtzee_GUI(int num_players, int seed, String [] players) {
+	public Yahtzee_GUI(int num_players, int seed, String [] players, String player_name) {
 		//Main Window
 		super("YAHTZEE");
 		setLayout(new BorderLayout());
@@ -50,7 +49,6 @@ public class Yahtzee_GUI extends JFrame {
 		roll_button = new JButton("Roll Dice");
 		dice_buttons = new JToggleButton[5];
 		dice = new Dice(seed);
-		scores = new JLabel[5];
 		dice_pictures = new ImageIcon[6];
 		//score
 		score_buttons = new JButton[13];
@@ -75,6 +73,7 @@ public class Yahtzee_GUI extends JFrame {
 		//players
 		player_panels = new JPanel[num_players];
 		player_score_labels = new JLabel[num_players];
+		playerScorecard = new Scoreboard(player_name);
 		
 		//retrieve dice pictures
 	   File myDir = null;
@@ -161,7 +160,6 @@ public class Yahtzee_GUI extends JFrame {
 	public class Yahtzee_Listener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == roll_button){
-				update_labels();
 				roll_dice();
 			}else{
 				dice_buttons_pressed(e);
@@ -172,6 +170,10 @@ public class Yahtzee_GUI extends JFrame {
 	private void roll_dice(){
 		dice.roll();
 		update_dice();
+		int [] possible_scores = playerScorecard.get_possible_scores(
+				dice.get_dice_values());
+		
+		update_labels(possible_scores);
 	}
 	
 	private void dice_buttons_pressed(ActionEvent e){
@@ -182,18 +184,24 @@ public class Yahtzee_GUI extends JFrame {
 		}
 	}
 	
-	public void update_dice(){
-		int dice_value;
+	private void update_dice(){
+		int[] dice_values = dice.get_dice_values();
 		for(int i=0;i<5;i++){
-			dice_value = dice.get_die_value(i)-1;
-			dice_buttons[i].setIcon(dice_pictures[dice_value]);
+			dice_buttons[i].setIcon(dice_pictures[dice_values[i]-1]);
 		}
 	}
 	
-	public void update_labels(){
-		for(int i = 0; i < 14; i++){
-			score_labels[i].setText(Integer.toString(i));
+	
+	private void update_labels(int [] possible_scores){
+		for(int i = 0; i < 13; i++){
+			if(possible_scores[i]!=-1){
+				score_labels[i].setText(possible_scores[i]+"");
+			}
 		}
+	}
+	
+	private void update_check_bonus(){
+	
 	}
 	
 }

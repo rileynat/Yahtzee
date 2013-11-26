@@ -32,11 +32,8 @@ public class Dice {
 		}
 	}
 	
-	int get_die_value(final int die_index){
-		if(die_index>=0 && die_index<=NUMDICE-1){
-			return die_values[die_index];
-		}
-		return -1;
+	final int[] get_dice_values(){
+		return die_values;
 	}
 	
 	boolean is_die_locked(final int die_index){

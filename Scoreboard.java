@@ -47,12 +47,20 @@ public class Scoreboard {
 		possible_scores[8] = calculate_fh(dice, available[8]);
 		possible_scores[9] = calculate_ss(dice, available[9]);
 		possible_scores[10] = calculate_ls(dice, available[10]);
-		possible_scores[11] = calculate_ofAKind(dice, available[11], 5);
-		possible_scores[12] = calculate_chance(dice, available[12]);
-		
+		possible_scores[11] = calculate_chance(dice, available[11]);
+		possible_scores[12] = calculate_ofAKind(dice, available[12], 5);
 		return possible_scores;
 	}
 	
+	public boolean check_bonus(){
+		int tot = 0;
+		for(int i=0;i<6;i++){
+			tot += points[i];
+		}
+		if(tot>=63) return true;
+		
+		return false;
+	}
 	private int calculate_upper(int dice[], boolean avail, int index)
 	{
 		if(!avail)
