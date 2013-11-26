@@ -33,7 +33,7 @@ public class ClientServerSocket
    {
       try {
          socket = new Socket(ipAddr, portNum);
-         socket.setSoTimeout(5);
+         socket.setSoTimeout(2000);
          outData = new DataOutputStream(socket.getOutputStream());
          inData = new DataInputStream(socket.getInputStream());
       } catch (IOException ioe) {
@@ -61,7 +61,9 @@ public class ClientServerSocket
 
    public void getClient()
    {
-      clients = new ArrayList<ServerClient>();
+      if (clients == null) {
+         clients = new ArrayList<ServerClient>();
+      }
 
       try {
          if (serverSock == null) {

@@ -26,6 +26,7 @@ public class ClientTest
       System.out.println("test before recieving string");
       recvdStr = theClient.recvString();
       while (recvdStr == "") {
+         theClient.sendString("Hello to the server! test");
          recvdStr = theClient.recvString();
          System.out.print(recvdStr);
       }
