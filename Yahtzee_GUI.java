@@ -20,10 +20,12 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
+import javax.xml.stream.events.EndDocument;
 
 @SuppressWarnings("serial")
 public class Yahtzee_GUI extends JFrame {
 	private JButton roll_button;
+	private JLabel roll_countJLabel;
 	private JToggleButton [] dice_buttons;
 	private Scoreboard playerScorecard;
 	private Dice dice;
@@ -33,20 +35,26 @@ public class Yahtzee_GUI extends JFrame {
 	private JLabel [] score_labels;
 	private JPanel [] player_panels;
 	private JLabel [] player_score_labels;
-		
+	private int roll_count;
+	private int this_player_index;
 	//this is just a test
 	
 	private final Border BLACKLINE = BorderFactory.createLineBorder(Color.black);
 	private final Border REDLINE= BorderFactory.createLineBorder(Color.red);
+	private final String ROLL_COUNT_STRING = "Current Roll: ";
 	
 	public Yahtzee_GUI(int num_players, int seed, String [] players, String player_name) {
 		//Main Window
 		super("YAHTZEE");
 		setLayout(new BorderLayout());
 		listener = new Yahtzee_Listener();
-		
+		roll_count = 0;
 		//dice 
+		for(int i=0;i<num_players;i++){
+			if(players[i].equals(player_name)) this_player_index = i;
+		}
 		roll_button = new JButton("Roll Dice");
+		roll_countJLabel = new JLabel(ROLL_COUNT_STRING + (roll_count+1));
 		dice_buttons = new JToggleButton[5];
 		dice = new Dice(seed);
 		dice_pictures = new ImageIcon[6];
@@ -65,6 +73,10 @@ public class Yahtzee_GUI extends JFrame {
 		score_buttons[10] = new JButton("Large Staight");
 		score_buttons[11] = new JButton("Chance");
 		score_buttons[12] = new JButton("Yahtzee!");
+		for(int i=0; i < 13; i++){
+			score_buttons[i].addActionListener(listener);
+		}
+		
 		score_labels = new JLabel[14];
 		for(int i=0;i<14;i++){
 			score_labels[i] = new JLabel();
@@ -112,6 +124,7 @@ public class Yahtzee_GUI extends JFrame {
 		dice_panel.add(dice_pic_panel, BorderLayout.NORTH);
 		JPanel rollPanel = new JPanel(new FlowLayout());
 		rollPanel.add(roll_button);
+		rollPanel.add(roll_countJLabel);
 		dice_panel.add(rollPanel, BorderLayout.SOUTH);
 		
 		add(dice_panel, BorderLayout.SOUTH);
@@ -160,9 +173,14 @@ public class Yahtzee_GUI extends JFrame {
 	public class Yahtzee_Listener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == roll_button){
-				roll_dice();
+				if(roll_count <3){
+					roll_dice();
+				}
+				roll_count++;
 			}else{
-				dice_buttons_pressed(e);
+				if(!dice_buttons_pressed(e)){
+					score_buttons_pressed(e);
+				}
 			}
 		}
 	}
@@ -176,10 +194,28 @@ public class Yahtzee_GUI extends JFrame {
 		update_labels(possible_scores);
 	}
 	
-	private void dice_buttons_pressed(ActionEvent e){
+	private boolean dice_buttons_pressed(ActionEvent e){
 		for(int i=0;i<5;i++){
 			if(e.getSource() == dice_buttons[i]){
 				dice.toggle_lock_die(i);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private void score_buttons_pressed(ActionEvent e){
+		for(int i=0;i<13;i++){
+			if(e.getSource() == score_buttons[i]){
+				if(score_buttons[i].isEnabled()){
+					score_buttons[i].setEnabled(false);
+					playerScorecard.insert_new_score(i, 
+							Integer.parseInt(score_labels[i].getText()));
+					player_score_labels[this_player_index].setText(
+							playerScorecard.get_score()+"");
+					end_turn();
+					score_labels[i].setForeground(Color.gray);
+				}
 			}
 		}
 	}
@@ -189,6 +225,7 @@ public class Yahtzee_GUI extends JFrame {
 		for(int i=0;i<5;i++){
 			dice_buttons[i].setIcon(dice_pictures[dice_values[i]-1]);
 		}
+		roll_countJLabel.setText(ROLL_COUNT_STRING + (roll_count+1));
 	}
 	
 	
@@ -201,7 +238,24 @@ public class Yahtzee_GUI extends JFrame {
 	}
 	
 	private void update_check_bonus(){
-	
+		if(playerScorecard.check_bonus()){
+			player_score_labels[this_player_index].setText(
+					playerScorecard.get_score()+"");
+			score_labels[14].setText("35");
+		}
 	}
+	
+	private void end_turn(){
+		update_check_bonus();
+		roll_count=0;
+		for(int i=0; i<5; i++){
+			if(dice.is_die_locked(i)){
+				dice_buttons[i].doClick();
+			}
+		}
+			
+	}
+	
+
 	
 }

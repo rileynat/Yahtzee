@@ -57,9 +57,10 @@ public class Scoreboard {
 		for(int i=0;i<6;i++){
 			tot += points[i];
 		}
-		if(tot>=63) return true;
+		if(tot< 63) return false;
 		
-		return false;
+		tot+=35;
+		return true;
 	}
 	private int calculate_upper(int dice[], boolean avail, int index)
 	{
