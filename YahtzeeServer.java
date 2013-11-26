@@ -15,7 +15,7 @@ public class YahtzeeServer
    {
       // TODO Auto-generated method stub
       players = new ArrayList<PlayerNameAndScore>();
-      int numClients = 1;
+      int numClients = 2;
 
       ClientServerSocket theServer;
       String recvdStr;
@@ -42,7 +42,7 @@ public class YahtzeeServer
       Date currentDate = new Date();
       long timestamp_long = currentDate.getTime();
       int timestamp = (int) timestamp_long & 0xFFFFFFFF;
-      System.out.print(timestamp);
+      // System.out.print(timestamp);
 
       theServer.sendStringToAll("Starting name:");
       theServer.sendStringToAll(players.get(0).name);

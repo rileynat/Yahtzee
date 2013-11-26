@@ -33,6 +33,7 @@ public class ClientServerSocket
    {
       try {
          socket = new Socket(ipAddr, portNum);
+         socket.setSoTimeout(5);
          outData = new DataOutputStream(socket.getOutputStream());
          inData = new DataInputStream(socket.getInputStream());
       } catch (IOException ioe) {

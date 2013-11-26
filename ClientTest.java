@@ -25,7 +25,7 @@ public class ClientTest
 
       System.out.println("test before recieving string");
       recvdStr = theClient.recvString();
-      while (recvdStr != "") {
+      while (recvdStr == "") {
          recvdStr = theClient.recvString();
          System.out.print(recvdStr);
       }
@@ -46,9 +46,9 @@ public class ClientTest
       recvdStr = theClient.recvString();
       System.out.println("Received this message from server: " + recvdStr);
 
-      for (long i = 0; i < 275807; i++) {
-         System.out.print('G');
-      }
+      // for (long i = 0; i < 275807; i++) {
+      // System.out.print('G');
+      // }
       theClient.sendInt(40);
    }
 
