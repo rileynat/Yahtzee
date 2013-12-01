@@ -37,7 +37,9 @@ public class Yahtzee_GUI extends JFrame {
 	private JLabel [] player_score_labels;
 	private int roll_count;
 	private int this_player_index;
+	private String[] player_names;
 	private boolean got_bonus;
+	private ClientServerSocket client;
 	//this is just a test
 	
 	private final Border BLACKLINE = BorderFactory.createLineBorder(Color.black);
@@ -45,7 +47,7 @@ public class Yahtzee_GUI extends JFrame {
 	private final String ROLL_COUNT_STRING = "Current Roll: ";
 	private final Color background_Color = new Color(85, 200,50);
 	private final Color button_Color = new Color(200,200,200);
-	public Yahtzee_GUI(int num_players, int seed, String [] players, String player_name) {
+	public Yahtzee_GUI(int num_players, int seed, String [] players, String in_player_name, ClientServerSocket inClient) {
 		//Main Window
 		super("YAHTZEE");
 		setLayout(new BorderLayout());
@@ -53,10 +55,14 @@ public class Yahtzee_GUI extends JFrame {
 		getContentPane().setBackground(background_Color);
 		listener = new Yahtzee_Listener();
 		roll_count = 0;
+		client = inClient;
 		got_bonus=false;
 		//dice 
+		player_names = new String[num_players];
+		
 		for(int i=0;i<num_players;i++){
-			if(players[i].equals(player_name)) this_player_index = i;
+			player_names[i]= players[i]; 
+			if(players[i].equals(in_player_name)) this_player_index = i;
 		}
 		roll_button = new JButton("Roll Dice");
 		roll_button.setBackground(button_Color);
@@ -92,7 +98,7 @@ public class Yahtzee_GUI extends JFrame {
 		//players
 		player_panels = new JPanel[num_players];
 		player_score_labels = new JLabel[num_players];
-		playerScorecard = new Scoreboard(player_name);
+		playerScorecard = new Scoreboard(in_player_name);
 		
 		//retrieve dice pictures
 	   File myDir = null;
@@ -203,6 +209,15 @@ public class Yahtzee_GUI extends JFrame {
 	//Then it will update all the scores and whose players turn it is
 	//if it is this Gui player turn, it will call start turn.
 	
+	private void get_Server_data(){
+		while(true){
+			String recieved_string = "";
+			while("".equals(recieved_string)){
+				recieved_string = client.recvString();
+			}
+		}
+	}
+	
 	private void start_turn(){
 		//remove the glass panel,
 		//roll the dice, and set the roll button correctly.
@@ -284,9 +299,11 @@ public class Yahtzee_GUI extends JFrame {
 		}
 		//put a glass panel over the UI so that nothing can be touched. 
 		//send back to the network, name and current score. 
+		client.sendString("Send Score");
+		client.sendString(player_names[this_player_index]);
+		client.sendInt(playerScorecard.get_score());
 		
-		//for now just to show the basic game functionality.
-		start_turn();
+		
 	}
 	
 
