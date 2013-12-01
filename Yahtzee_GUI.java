@@ -196,12 +196,7 @@ public class Yahtzee_GUI extends JFrame {
 		}
 		add(score_panel, BorderLayout.CENTER);
 
-		if(players[0].equals(in_player_name)){
-			start_turn();
-		}else{		
-			get_Server_data();
-		}
-		
+
 	}
 	
 	public class Yahtzee_Listener implements ActionListener{
@@ -255,7 +250,7 @@ public class Yahtzee_GUI extends JFrame {
 	//Then it will update all the scores and whose players turn it is
 	//if it is this Gui player turn, it will call start turn.
 	
-	private void get_Server_data(){
+	void get_Server_data(){
 		while(true){
 			String recieved_string = "";
 			while("".equals(recieved_string)){
@@ -282,7 +277,7 @@ public class Yahtzee_GUI extends JFrame {
 		
 	}
 	
-	private void start_turn(){
+	void start_turn(){
 		//remove the glass panel,
 		//roll the dice, and set the roll button correctly.
 		glass.setVisible(false);

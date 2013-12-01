@@ -66,6 +66,11 @@ public class Yahtzee_main {
 		gui.setVisible(true);
 		gui.setDefaultCloseOperation(
 		JFrame.EXIT_ON_CLOSE);
+		if(players[0].equals(myPlayerName)){
+			gui.start_turn();
+		}else{		
+			gui.get_Server_data();
+		}
 	}
 }
 //
