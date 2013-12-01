@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.net.URISyntaxException;
 
@@ -21,6 +22,8 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.xml.stream.events.EndDocument;
+
+import org.w3c.dom.events.MouseEvent;
 
 @SuppressWarnings("serial")
 public class Yahtzee_GUI extends JFrame {
@@ -56,11 +59,13 @@ public class Yahtzee_GUI extends JFrame {
 		
 		getContentPane().setBackground(background_Color);
 		listener = new Yahtzee_Listener();
+		Glass_Pane_Listener glass_listener = new Glass_Pane_Listener();
 		roll_count = 0;
 		client = inClient;
 		got_bonus=false;
 		glass = new JPanel();
 		glass.setPreferredSize(getContentPane().getSize());
+		glass.addMouseListener(glass_listener);
 		setGlassPane(glass);
 		glass.setOpaque(false);
 		//dice 
@@ -210,6 +215,37 @@ public class Yahtzee_GUI extends JFrame {
 		}
 	}
 	
+	public class Glass_Pane_Listener implements MouseListener{
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(java.awt.event.MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(java.awt.event.MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(java.awt.event.MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(java.awt.event.MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+	}
 	
 	//we need a function to listen for news from the network
 	//Then it will update all the scores and whose players turn it is
