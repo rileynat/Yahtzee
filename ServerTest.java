@@ -7,7 +7,8 @@ public class ServerTest
 {
    static ArrayList<playerNameAndScore> players;
 
-   public final static String IPADDRESS = "192.168.1.125";
+   public final static String IPADDRESS = "10.0.0.47";
+   //"192.168.1.125";
    public final static String FXBIPADDRESS = "67.194.113.232";
 
    public static void main(String[] args)
