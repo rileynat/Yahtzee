@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Yahtzee_main {
    
-   public final static String IPADDRESS = "67.194.30.199";
+   public final static String IPADDRESS = "10.0.0.47";
    public final static String FXBIPADDRESS = "67.194.113.232";
    public static ArrayList<String> playerNames;
    
@@ -16,6 +16,7 @@ public class Yahtzee_main {
 	   boolean serverInUse = false;
 	      String string = "";
 	      String recvdStr = "";
+	      int numPlayers = 4;
 	      ClientServerSocket client;
 	      playerNames = new ArrayList<String>();
 	      String [] players = {"SpongeBob", "Patrick", "Squidward", "Mr Krabs"};
@@ -41,7 +42,7 @@ public class Yahtzee_main {
 	         System.out.print(recvdStr);
 	      }
 	      
-	      int numPlayers = client.recvInt();
+	      numPlayers = client.recvInt();
 	      System.out.println("Received number of players from server: "
 	            + numPlayers);
 	      recvdStr = client.recvString();
@@ -59,7 +60,7 @@ public class Yahtzee_main {
 	      }
 	      
 		
-		Yahtzee_GUI gui = new Yahtzee_GUI(4, 1000, players, recvdStr);
+		Yahtzee_GUI gui = new Yahtzee_GUI(numPlayers, 1000, players, recvdStr);
 		gui.pack();		
 		gui.setVisible(true);
 		gui.setDefaultCloseOperation(

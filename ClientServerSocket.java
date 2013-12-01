@@ -83,6 +83,7 @@ public class ClientServerSocket
    }
 
    public boolean sendString(String strToSend)
+
    {
       boolean success = false;
       try {
@@ -97,6 +98,7 @@ public class ClientServerSocket
    }
 
    public boolean sendStringToAll(String strToSend)
+   // reserved for the server side
    {
       boolean success = false;
       if (clients == null) {
@@ -116,6 +118,7 @@ public class ClientServerSocket
    }
 
    public String waitForString()
+   // reserved for the server side
    {
       Vector<Byte> byteVec = new Vector<Byte>();
       byte[] byteAry;
@@ -144,6 +147,7 @@ public class ClientServerSocket
    }
 
    public String recvString()
+   // reserved for the client side
    {
       Vector<Byte> byteVec = new Vector<Byte>();
       byte[] byteAry;
@@ -167,6 +171,7 @@ public class ClientServerSocket
    }
 
    public int recvInt()
+   // reserved for the client side
    {
       int recvInt = 0;
       try {
@@ -179,6 +184,7 @@ public class ClientServerSocket
    }
 
    public void sendInt(int inSendInt)
+   // reserved for the client side
    {
       try {
          outData.writeInt(inSendInt);
@@ -189,6 +195,7 @@ public class ClientServerSocket
    }
 
    public void sendIntToAll(int inSendInt)
+   // reserved for the server side
    {
       try {
          for (ServerClient client : clients) {
@@ -201,6 +208,7 @@ public class ClientServerSocket
    }
 
    public int waitForInt()
+   // reserved for the server side
    {
       int recvInt = 0;
       boolean success = false;

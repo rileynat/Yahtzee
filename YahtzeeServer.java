@@ -8,7 +8,7 @@ public class YahtzeeServer
 
    static ArrayList<PlayerNameAndScore> players;
 
-   public final static String IPADDRESS = "67.194.30.199";
+   public final static String IPADDRESS = "10.0.0.47";
    public final static String FXBIPADDRESS = "67.194.113.232";
 
    public static void main(String[] args)
@@ -50,12 +50,13 @@ public class YahtzeeServer
       int currentPlayer = 0;
       String str = "";
       while (true) {
-
-         while (str == "") {
+         str = "";
+         while (str.equals("")) {
             str = theServer.waitForString();
          }
 
          if (str.equals("Send Score")) {
+            str = theServer.waitForString();
             int score = theServer.waitForInt();
             System.out.println(score);
             players.get(currentPlayer).score = score;
@@ -67,6 +68,7 @@ public class YahtzeeServer
             currentPlayer = (currentPlayer + 1) % players.size();
          }
 
+         theServer.sendStringToAll(players.get(currentPlayer).name);
       }
 
       // System.out.print('\n');
