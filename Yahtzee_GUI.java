@@ -320,11 +320,7 @@ public class Yahtzee_GUI extends JFrame {
 		client.sendString("Send Score");
 		client.sendString(player_names[this_player_index]);
 		client.sendInt(playerScorecard.get_score());
-<<<<<<< HEAD
-		
-		start_turn();
-=======
->>>>>>> 3b90805ee7ed356fc9103847272f7d3829f66f99
+		get_Server_data();
 	}
 	
 
