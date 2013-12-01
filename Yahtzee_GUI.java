@@ -196,7 +196,11 @@ public class Yahtzee_GUI extends JFrame {
 		}
 		add(score_panel, BorderLayout.CENTER);
 
-		end_turn();
+		if(players[0].equals(in_player_name)){
+			start_turn();
+		}else{		
+			get_Server_data();
+		}
 		
 	}
 	
