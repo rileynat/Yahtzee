@@ -196,7 +196,8 @@ public class Yahtzee_GUI extends JFrame {
 			score_panel.add(score_labels[i]);
 		}
 		add(score_panel, BorderLayout.CENTER);
-
+		player_panels[0].setBorder(
+								BorderFactory.createTitledBorder(REDLINE, player_names[0]));
 
 	}
 	
