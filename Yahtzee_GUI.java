@@ -245,8 +245,8 @@ public class Yahtzee_GUI extends JFrame {
 	private void start_turn(){
 		//remove the glass panel,
 		//roll the dice, and set the roll button correctly.
-		glass.setVisible(false);
-		repaint();
+	//	glass.setVisible(false);
+	//	repaint();
 		roll_dice();
 		roll_count=1;
 	}
