@@ -60,7 +60,7 @@ public class Yahtzee_main {
 	      }
 	      
 		
-		Yahtzee_GUI gui = new Yahtzee_GUI(numPlayers, 1000, players, recvdStr);
+		Yahtzee_GUI gui = new Yahtzee_GUI(numPlayers, 1000, players, recvdStr, client);
 		gui.pack();		
 		gui.setVisible(true);
 		gui.setDefaultCloseOperation(
