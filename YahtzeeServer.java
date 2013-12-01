@@ -1,7 +1,6 @@
 package eecs285.proj4.Yahtzee;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class YahtzeeServer
 {
@@ -40,10 +39,10 @@ public class YahtzeeServer
          theServer.sendStringToAll(player.name);
       }
 
-      Date currentDate = new Date();
-      long timestamp_long = currentDate.getTime();
-      int timestamp = (int) timestamp_long & 0xFFFFFFFF;
-      // System.out.print(timestamp);
+      // Date currentDate = new Date();
+      // long timestamp_long = currentDate.getTime();
+      // int timestamp = (int) timestamp_long & 0xFFFFFFFF;
+      // // System.out.print(timestamp);
 
       theServer.sendStringToAll("Starting name:");
       theServer.sendStringToAll(players.get(0).name);
