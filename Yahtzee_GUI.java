@@ -42,11 +42,14 @@ public class Yahtzee_GUI extends JFrame {
 	private final Border BLACKLINE = BorderFactory.createLineBorder(Color.black);
 	private final Border REDLINE= BorderFactory.createLineBorder(Color.red);
 	private final String ROLL_COUNT_STRING = "Current Roll: ";
-	
+	private final Color background_Color = new Color(85, 200,50);
+	private final Color button_Color = new Color(200,200,200);
 	public Yahtzee_GUI(int num_players, int seed, String [] players, String player_name) {
 		//Main Window
 		super("YAHTZEE");
 		setLayout(new BorderLayout());
+		
+		getContentPane().setBackground(background_Color);
 		listener = new Yahtzee_Listener();
 		roll_count = 0;
 		//dice 
@@ -54,6 +57,7 @@ public class Yahtzee_GUI extends JFrame {
 			if(players[i].equals(player_name)) this_player_index = i;
 		}
 		roll_button = new JButton("Roll Dice");
+		roll_button.setBackground(button_Color);
 		roll_countJLabel = new JLabel(ROLL_COUNT_STRING + (roll_count+1));
 		dice_buttons = new JToggleButton[5];
 		dice = new Dice(seed);
@@ -75,6 +79,7 @@ public class Yahtzee_GUI extends JFrame {
 		score_buttons[12] = new JButton("Yahtzee!");
 		for(int i=0; i < 13; i++){
 			score_buttons[i].addActionListener(listener);
+			score_buttons[i].setBackground(button_Color);
 		}
 		
 		score_labels = new JLabel[14];
@@ -113,16 +118,19 @@ public class Yahtzee_GUI extends JFrame {
 	    
 		//Dice Panel
 		JPanel dice_panel = new JPanel(new BorderLayout());
+		dice_panel.setOpaque(false);
 		JPanel dice_pic_panel = new JPanel(new FlowLayout());
+		dice_pic_panel.setOpaque(false);
 		for(int i = 0; i < 5; i++){
 			dice_buttons[i]= new JToggleButton();
-			dice_buttons[i].setBackground(Color.white);
+	
 			dice_pic_panel.add(dice_buttons[i]);
 			dice_buttons[i].addActionListener(listener);
 		}
 		
 		dice_panel.add(dice_pic_panel, BorderLayout.NORTH);
 		JPanel rollPanel = new JPanel(new FlowLayout());
+		rollPanel.setOpaque(false);
 		rollPanel.add(roll_button);
 		rollPanel.add(roll_countJLabel);
 		dice_panel.add(rollPanel, BorderLayout.SOUTH);
@@ -133,6 +141,7 @@ public class Yahtzee_GUI extends JFrame {
 
 		//players panels
 		JPanel top_panel = new JPanel(new GridLayout(1, num_players));
+		top_panel.setOpaque(false);
 		player_panels = new JPanel[num_players];
 		player_score_labels = new JLabel[num_players];
 		
@@ -142,12 +151,14 @@ public class Yahtzee_GUI extends JFrame {
 					BorderFactory.createTitledBorder(BLACKLINE, players[i]));
 			player_score_labels[i] = new JLabel("0");
 			player_panels[i].add(player_score_labels[i]);
+			player_panels[i].setOpaque(false);
 			top_panel.add(player_panels[i]);
 		}
 		add(top_panel, BorderLayout.NORTH);
 		
 		//scoreboard panel
 		JPanel score_panel = new JPanel(new GridLayout(4, 7));
+		score_panel.setOpaque(false);
 		for(int i = 0; i < 6; i++) {
 			score_panel.add(score_buttons[i]);
 		}
@@ -166,7 +177,6 @@ public class Yahtzee_GUI extends JFrame {
 		}
 		add(score_panel, BorderLayout.CENTER);
 
-		
 		
 	}
 	
