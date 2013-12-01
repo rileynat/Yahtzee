@@ -215,7 +215,21 @@ public class Yahtzee_GUI extends JFrame {
 			while("".equals(recieved_string)){
 				recieved_string = client.recvString();
 			}
+			if("Update Score".equals(recieved_string)){
+				for(int i =0; i < player_names.length ; i++){
+					player_score_labels[i].setText(client.recvInt()+"");
+				}
+				
+				String in_player_turn = client.recvString();
+				for(int i=0; i < player_names.length; i++){
+					if(player_names[i].equals(in_player_turn)){
+						player_panels[i].setBorder(
+								BorderFactory.createTitledBorder(REDLINE, player_names[i]));
+					}
+				}
+			}
 		}
+		
 	}
 	
 	private void start_turn(){
