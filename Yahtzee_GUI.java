@@ -227,8 +227,12 @@ public class Yahtzee_GUI extends JFrame {
 								BorderFactory.createTitledBorder(REDLINE, player_names[i]));
 					}
 				}
+				if(player_names[this_player_index].equals(in_player_turn)){
+					break;
+				}
 			}
 		}
+		start_turn();
 		
 	}
 	
@@ -316,8 +320,6 @@ public class Yahtzee_GUI extends JFrame {
 		client.sendString("Send Score");
 		client.sendString(player_names[this_player_index]);
 		client.sendInt(playerScorecard.get_score());
-		
-		
 	}
 	
 
