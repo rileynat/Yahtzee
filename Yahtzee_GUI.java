@@ -68,6 +68,7 @@ public class Yahtzee_GUI extends JFrame {
 		glass.addMouseListener(glass_listener);
 		setGlassPane(glass);
 		glass.setOpaque(false);
+		glass.setVisible(true);
 		//dice 
 		player_names = new String[num_players];
 		
