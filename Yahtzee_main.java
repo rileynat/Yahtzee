@@ -13,7 +13,8 @@ public class Yahtzee_main {
    
 	public static void main(String [] args){
 	   boolean success = false;
-	   boolean serverInUse = false;
+	   boolean serverInUse = true;
+	   String myPlayerName = "";
 	      String string = "";
 	      String recvdStr = "";
 	      int numPlayers = 4;
@@ -27,13 +28,13 @@ public class Yahtzee_main {
 	      while (!success) {
 	         PlayerNamesDialog namesDialog = new PlayerNamesDialog(new JFrame(),
 	               "Player Names Input");
-	         string = namesDialog.getName();
-	         if (string.trim().length() > 0) {
+	         myPlayerName = namesDialog.getName();
+	         if (myPlayerName.trim().length() > 0) {
 	            success = true;
 	         }
 	      }
 	      if (serverInUse) {
-	      client.sendString(string);
+	      client.sendString(myPlayerName);
 	      System.out.println("test before recieving string");
 	      recvdStr = client.recvString();
 	      while (recvdStr == "") {
@@ -60,7 +61,7 @@ public class Yahtzee_main {
 	      }
 	      
 		
-		Yahtzee_GUI gui = new Yahtzee_GUI(numPlayers, 1000, players, recvdStr, client);
+		Yahtzee_GUI gui = new Yahtzee_GUI(numPlayers, 1000, players, myPlayerName, client);
 		gui.pack();		
 		gui.setVisible(true);
 		gui.setDefaultCloseOperation(
