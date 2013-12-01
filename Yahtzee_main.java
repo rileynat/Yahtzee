@@ -13,13 +13,16 @@ public class Yahtzee_main {
    
 	public static void main(String [] args){
 	   boolean success = false;
+	   boolean serverInUse = false;
 	      String string = "";
 	      String recvdStr = "";
 	      ClientServerSocket client;
 	      playerNames = new ArrayList<String>();
 	      String [] players = {"SpongeBob", "Patrick", "Squidward", "Mr Krabs"};
 	      client = new ClientServerSocket(IPADDRESS, 45548);
+	      if (serverInUse) {
 	      client.startClient();
+	      }
 	      while (!success) {
 	         PlayerNamesDialog namesDialog = new PlayerNamesDialog(new JFrame(),
 	               "Player Names Input");
@@ -28,6 +31,7 @@ public class Yahtzee_main {
 	            success = true;
 	         }
 	      }
+	      if (serverInUse) {
 	      client.sendString(string);
 	      System.out.println("test before recieving string");
 	      recvdStr = client.recvString();
@@ -52,7 +56,7 @@ public class Yahtzee_main {
 	      System.out.println("Received this message from server: " + recvdStr);
 	      recvdStr = client.recvString();
 	      System.out.println("Received this message from server: " + recvdStr);
-	      
+	      }
 	      
 		
 		Yahtzee_GUI gui = new Yahtzee_GUI(4, 1000, players, recvdStr);
