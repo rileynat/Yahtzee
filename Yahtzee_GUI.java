@@ -40,6 +40,8 @@ public class Yahtzee_GUI extends JFrame {
 	private String[] player_names;
 	private boolean got_bonus;
 	private ClientServerSocket client;
+	
+	private JPanel glass;
 	//this is just a test
 	
 	private final Border BLACKLINE = BorderFactory.createLineBorder(Color.black);
@@ -57,6 +59,10 @@ public class Yahtzee_GUI extends JFrame {
 		roll_count = 0;
 		client = inClient;
 		got_bonus=false;
+		glass = new JPanel();
+		glass.setPreferredSize(getContentPane().getSize());
+		setGlassPane(glass);
+		glass.setOpaque(true);
 		//dice 
 		player_names = new String[num_players];
 		
@@ -239,6 +245,8 @@ public class Yahtzee_GUI extends JFrame {
 	private void start_turn(){
 		//remove the glass panel,
 		//roll the dice, and set the roll button correctly.
+		glass.setVisible(false);
+		repaint();
 		roll_dice();
 		roll_count=1;
 	}
@@ -306,6 +314,9 @@ public class Yahtzee_GUI extends JFrame {
 	}
 	
 	private void end_turn(){
+		glass.setVisible(true);
+		repaint();
+		
 		if(got_bonus==false){
 			got_bonus = update_check_bonus();
 		}
