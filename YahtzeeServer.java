@@ -28,7 +28,7 @@ public class YahtzeeServer
          System.out.println("Recevied message from client: " + recvdStr);
          PlayerNameAndScore player = new PlayerNameAndScore();
          player.name = recvdStr;
-         player.score = 2;
+         player.score = 0;
          players.add(player);
       }
 
