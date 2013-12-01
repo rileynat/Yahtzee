@@ -59,7 +59,7 @@ public class Scoreboard {
 		}
 		if(tot< 63) return false;
 		
-		tot+=35;
+		total+=35;
 		return true;
 	}
 	private int calculate_upper(int dice[], boolean avail, int index)

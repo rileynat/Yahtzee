@@ -37,6 +37,7 @@ public class Yahtzee_GUI extends JFrame {
 	private JLabel [] player_score_labels;
 	private int roll_count;
 	private int this_player_index;
+	private boolean got_bonus;
 	//this is just a test
 	
 	private final Border BLACKLINE = BorderFactory.createLineBorder(Color.black);
@@ -52,6 +53,7 @@ public class Yahtzee_GUI extends JFrame {
 		getContentPane().setBackground(background_Color);
 		listener = new Yahtzee_Listener();
 		roll_count = 0;
+		got_bonus=false;
 		//dice 
 		for(int i=0;i<num_players;i++){
 			if(players[i].equals(player_name)) this_player_index = i;
@@ -177,6 +179,7 @@ public class Yahtzee_GUI extends JFrame {
 		}
 		add(score_panel, BorderLayout.CENTER);
 
+		end_turn();
 		
 	}
 	
@@ -193,6 +196,18 @@ public class Yahtzee_GUI extends JFrame {
 				}
 			}
 		}
+	}
+	
+	
+	//we need a function to listen for news from the network
+	//Then it will update all the scores and whose players turn it is
+	//if it is this Gui player turn, it will call start turn.
+	
+	private void start_turn(){
+		//remove the glass panel,
+		//roll the dice, and set the roll button correctly.
+		roll_dice();
+		roll_count=1;
 	}
 	
 	private void roll_dice(){
@@ -247,23 +262,31 @@ public class Yahtzee_GUI extends JFrame {
 		}
 	}
 	
-	private void update_check_bonus(){
+	private boolean update_check_bonus(){
 		if(playerScorecard.check_bonus()){
 			player_score_labels[this_player_index].setText(
 					playerScorecard.get_score()+"");
-			score_labels[14].setText("35");
+			score_labels[13].setText("35");
+			return true;
 		}
+		return false;
 	}
 	
 	private void end_turn(){
-		update_check_bonus();
+		if(got_bonus==false){
+			got_bonus = update_check_bonus();
+		}
 		roll_count=0;
 		for(int i=0; i<5; i++){
 			if(dice.is_die_locked(i)){
 				dice_buttons[i].doClick();
 			}
 		}
-			
+		//put a glass panel over the UI so that nothing can be touched. 
+		//send back to the network, name and current score. 
+		
+		//for now just to show the basic game functionality.
+		start_turn();
 	}
 	
 
