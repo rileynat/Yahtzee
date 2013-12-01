@@ -8,14 +8,14 @@ public class YahtzeeServer
 
    static ArrayList<PlayerNameAndScore> players;
 
-   public final static String IPADDRESS = "10.0.0.21";
+   public final static String IPADDRESS = "192.168.1.125";
    public final static String FXBIPADDRESS = "67.194.113.232";
 
    public static void main(String[] args)
    {
       // TODO Auto-generated method stub
       players = new ArrayList<PlayerNameAndScore>();
-      int numClients = 2;
+      int numClients = 1;
 
       ClientServerSocket theServer;
       String recvdStr;
