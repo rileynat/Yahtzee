@@ -168,6 +168,12 @@ public class Scoreboard {
 			|| set.equals(check3) || (calculate_ls(dice, true) > 0))
 			score = 30;
 		
+		check1.add(new Integer(6));
+		check2.add(new Integer(1));
+		
+		if(set.equals(check1) || set.equals(check2))
+			score = 30;
+		
 		return score;
 	}
 	
