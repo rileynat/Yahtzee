@@ -48,6 +48,7 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
           private int num_players;
           private String[] player_names;
           private boolean got_bonus;
+          private boolean in_lock_down;
           private ClientServerSocket client;
           private yahtzee_scorecard card;
           
@@ -65,7 +66,7 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                   setLayout(new BorderLayout());
                   num_players = _num_players;
 
-                  
+                  in_lock_down = true;
                   getContentPane().setBackground(background_Color);
                   listener = new Yahtzee_Listener();
                   Glass_Pane_Listener glass_listener = new Glass_Pane_Listener();
@@ -214,6 +215,7 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
           
           public class Yahtzee_Listener implements ActionListener{
                   public void actionPerformed(ActionEvent e) {
+                  	if(in_lock_down == false){
                           if(e.getSource() == roll_button){
                                   if(roll_count <3){
                                           roll_dice();
@@ -224,6 +226,7 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                                           score_buttons_pressed(e);
                                   }
                           }
+                  	}
                   }
           }
           
@@ -325,6 +328,7 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                   //remove the glass panel,
                   //roll the dice, and set the roll button correctly.
                   glass.setVisible(false);
+                  in_lock_down=false;
                   roll_dice();
                   roll_count=1;
           }
@@ -410,6 +414,7 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                   //put a glass panel over the UI so that nothing can be touched. 
                   //send back to the network, name and current score.
                   glass.setVisible(true);
+                  in_lock_down = true;
                   client.sendString("Send Score");
                   client.sendString(player_names[this_player_index]);
                   client.sendString(card.labels[index+1].getText().trim() + 
