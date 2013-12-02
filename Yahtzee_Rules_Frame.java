@@ -7,12 +7,17 @@ import java.awt.GridLayout;
 
 import javax.swing.*;
 
-
+/*
+  This class creates a new frame when activated to display
+  the gameplay and scoring rules to the player.
+*/
 public class Yahtzee_Rules_Frame extends JTabbedPane {
 
 	public static boolean open = false;
 	public JFrame display = new JFrame("Game Info");
 	
+	//These rules are from the Hasbro website and are the
+	//official Yahtzee rules.
 	public Yahtzee_Rules_Frame()
 	{
 		super();
@@ -56,16 +61,6 @@ public class Yahtzee_Rules_Frame extends JTabbedPane {
 		score_frame.add(scores_label);
 		addTab("Scores", score_frame);
 		display.add(this);
-		//display.setSize(new Dimension(300, 300));
 		display.pack();
-	}
-	
-	public void show_frame()
-	{
-		open = true;
-	}
-	public void hide_frame()
-	{
-		open = false;
 	}
 }

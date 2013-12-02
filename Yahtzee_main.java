@@ -5,10 +5,14 @@ import javax.swing.JFrame;
 import java.util.ArrayList;
 import java.util.Date;
 
+//Class that contains the main function for the entire
+//gameplay including client set-up and loading the GUI
+//This is the file to run when playing
 public class Yahtzee_main
 {
 
-   public final static String IPADDRESS = "67.194.123.241";
+   //IP address that must be modified ot run the program
+   public final static String IPADDRESS = "67.194.117.70";
    public final static String FXBIPADDRESS = "67.194.113.232";
    public static ArrayList<String> playerNames;
 

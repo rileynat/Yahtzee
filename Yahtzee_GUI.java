@@ -39,6 +39,11 @@ import eecs285.proj4.Yahtzee.Scoreboard;
 
 @SuppressWarnings("serial")
 // import eecs285.proj4.Yahtzee.Yahtzee_GUI.yahtzee_scorecard;
+/*
+   This is the main UI for the Yahtzee game. It creates a window
+   which displays the scores, rolls, and possible moves for each
+   player.
+*/
 public class Yahtzee_GUI extends JFrame
 {
    private JButton roll_button;
@@ -59,8 +64,8 @@ public class Yahtzee_GUI extends JFrame
    private boolean in_lock_down;
    private ClientServerSocket client;
    private yahtzee_scorecard card;
-   private Yahtzee_Rules_Frame rule_frame; //add this
-   private JButton show_rules; //add this
+   private Yahtzee_Rules_Frame rule_frame; 
+   private JButton show_rules; 
 
    // this is just a test
 
@@ -137,6 +142,7 @@ public class Yahtzee_GUI extends JFrame
 
       fileList = myDir.listFiles();
 
+      //Adding the dice images
       for (int i = 0; i < 6; i++) {
          dice_pictures[i] = new ImageIcon(fileList[i].toString());
       }
@@ -155,24 +161,26 @@ public class Yahtzee_GUI extends JFrame
          dice_pic_panel.add(dice_buttons[i]);
          dice_buttons[i].addActionListener(listener);
       }
-      
+
       dice_panel.add(dice_pic_panel, BorderLayout.NORTH);
       JPanel rollPanel = new JPanel(new FlowLayout());
       rollPanel.setOpaque(false);
       rollPanel.add(roll_button);
       rollPanel.add(roll_countJLabel);
-      
-      JPanel help_panel = new JPanel(new BorderLayout()); //add this
-      help_panel.add(rollPanel, BorderLayout.CENTER); //add this
-      rule_frame = new Yahtzee_Rules_Frame(); //add this
-      rule_frame.display.addWindowListener(new Rules_Window_Listener()); //add this
-      show_rules = new JButton("Game Info"); //add this
-      show_rules.addActionListener(new Rules_Listener()); //add this
-      help_panel.add(show_rules, BorderLayout.EAST); //add this
-      help_panel.setBackground( new Color(85, 200, 50) ); //add this
-      
-      dice_panel.add(help_panel, BorderLayout.SOUTH); //add this
-      
+
+      //Creating the help button to display the rules when clicked
+      JPanel help_panel = new JPanel(new BorderLayout());
+      help_panel.add(rollPanel, BorderLayout.CENTER);
+      rule_frame = new Yahtzee_Rules_Frame();
+      rule_frame.display.addWindowListener(new Rules_Window_Listener());
+                                                                         
+      show_rules = new JButton("Game Info");
+      show_rules.addActionListener(new Rules_Listener());
+      help_panel.add(show_rules, BorderLayout.EAST); 
+      help_panel.setBackground(new Color(85, 200, 50)); 
+
+      dice_panel.add(help_panel, BorderLayout.SOUTH); 
+
       add(dice_panel, BorderLayout.SOUTH);
       update_dice();
       roll_button.addActionListener(listener);
@@ -207,7 +215,6 @@ public class Yahtzee_GUI extends JFrame
          score_panel.add(score_buttons[i]);
       }
 
-      // add(score_panel, BorderLayout.CENTER);
       player_panels[0].setBorder(BorderFactory.createTitledBorder(REDLINE,
             player_names[0]));
 
@@ -221,63 +228,82 @@ public class Yahtzee_GUI extends JFrame
       mid.add(leftTempLabel);
       mid.add(card);
       mid.add(rightTempLabel);
-      // mid.add(tempLabel);
       add(mid, BorderLayout.CENTER);
    }
    
-   public class Rules_Listener implements ActionListener{ //add this
- 	  public void actionPerformed(ActionEvent e) {
- 		  if(Yahtzee_Rules_Frame.open == false)
- 		  {
- 			  rule_frame.display.setVisible(true);
- 		  }
- 	  }
-   }
-   public class Rules_Window_Listener implements WindowListener{ //add this
-
-   	  public void windowClosing(WindowEvent e)  
- 	  {
-  		  Yahtzee_Rules_Frame.open = false;
- 		  rule_frame.display.setVisible(false);
- 	  }
-
-		@Override
-		public void windowActivated(WindowEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void windowClosed(WindowEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void windowDeactivated(WindowEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void windowDeiconified(WindowEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void windowIconified(WindowEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void windowOpened(WindowEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
+   /*
+      Listens for a click on the help button and displays 
+      the game rules
+   */
+   public class Rules_Listener implements ActionListener
+   {
+      public void actionPerformed(ActionEvent e)
+      {
+         if (Yahtzee_Rules_Frame.open == false) {
+            rule_frame.display.setVisible(true);
+         }
+      }
    }
 
+   /*
+      Altering the close button action on the help frame.
+   */
+   public class Rules_Window_Listener implements WindowListener
+   { // add this
+
+      public void windowClosing(WindowEvent e)
+      {
+         Yahtzee_Rules_Frame.open = false;
+         rule_frame.display.setVisible(false);
+      }
+
+      @Override
+      public void windowActivated(WindowEvent arg0)
+      {
+         // TODO Auto-generated method stub
+
+      }
+
+      @Override
+      public void windowClosed(WindowEvent arg0)
+      {
+         // TODO Auto-generated method stub
+
+      }
+
+      @Override
+      public void windowDeactivated(WindowEvent arg0)
+      {
+         // TODO Auto-generated method stub
+
+      }
+
+      @Override
+      public void windowDeiconified(WindowEvent arg0)
+      {
+         // TODO Auto-generated method stub
+
+      }
+
+      @Override
+      public void windowIconified(WindowEvent arg0)
+      {
+         // TODO Auto-generated method stub
+
+      }
+
+      @Override
+      public void windowOpened(WindowEvent arg0)
+      {
+         // TODO Auto-generated method stub
+
+      }
+   }
+
+   /*
+      Controls the actions taken when a button is clicked,
+      keeping track of the actions of the player
+   */
    public class Yahtzee_Listener implements ActionListener
    {
       public void actionPerformed(ActionEvent e)
@@ -297,10 +323,8 @@ public class Yahtzee_GUI extends JFrame
       }
    }
 
-   // we need a function to listen for news from the network
-   // Then it will update all the scores and whose players turn it is
-   // if it is this Gui player turn, it will call start turn.
-
+  
+   //A function to reciece data from the server.
    void get_Server_data()
    {
       while (true) {
@@ -361,15 +385,16 @@ public class Yahtzee_GUI extends JFrame
 
    }
 
+   //Beggining the turn of the next player
    void start_turn()
    {
-      // remove the glass panel,
-      // roll the dice, and set the roll button correctly.
       in_lock_down = false;
       roll_dice();
       roll_count = 1;
    }
 
+   //Update the values of the die after a player rolls
+   //or at the beggining of a turn
    private void roll_dice()
    {
       dice.roll();
@@ -380,6 +405,8 @@ public class Yahtzee_GUI extends JFrame
       update_labels(possible_scores);
    }
 
+   //Lock or unlock the die depending on what the player
+   //wishes to keep or reroll
    private boolean dice_buttons_pressed(ActionEvent e)
    {
       for (int i = 0; i < 5; i++) {
@@ -391,6 +418,9 @@ public class Yahtzee_GUI extends JFrame
       return false;
    }
 
+   //Updates the players score according to what move 
+   //the player made. Disable that move in future turns
+   //and end the players turn
    private void score_buttons_pressed(ActionEvent e)
    {
       for (int j = 0; j < 13; j++) {
@@ -410,6 +440,7 @@ public class Yahtzee_GUI extends JFrame
       }
    }
 
+   //Updates the display of the die, animating the roll.
    private void update_dice()
    {
       int[] dice_values = dice.get_dice_values();
@@ -423,6 +454,8 @@ public class Yahtzee_GUI extends JFrame
       roll_countJLabel.setText(ROLL_COUNT_STRING + (roll_count + 1));
    }
 
+   //Updates the possible moves a player can make, letting them
+   //know the possible scores by highlighting the number in red
    private void update_labels(int[] possible_scores)
    {
       for (int i = 0; i < 13; i++) {
@@ -433,17 +466,19 @@ public class Yahtzee_GUI extends JFrame
       }
    }
 
+   //Check if a player has earned the bonus.
    private boolean update_check_bonus()
    {
       if (playerScorecard.check_bonus()) {
-         // player_score_labels[this_player_index].setText(
-         // Integer.toString(playerScorecard.get_score()));
          card.bonusScore.setText("35");
          return true;
       }
       return false;
    }
 
+   //Call an end to the current players turn,
+   //unlocking the die and disabling button
+   //clicks
    private void end_turn(int index)
    {
       for (int i = 0; i < 5; i++) {
@@ -467,16 +502,17 @@ public class Yahtzee_GUI extends JFrame
       get_Server_data();
    }
 
+   /*
+      This class controls the GUI of the scorecard displayed 
+      in the main frame. Displaying scores and possible moves
+      to the user as they play the game.
+   */
    private class yahtzee_scorecard extends JPanel
    {
 
       public JLabel[] labels = new JLabel[14];
       public final Border BLACKLINE = BorderFactory
             .createLineBorder(Color.black);
-      // private final Border GRAYLINE =
-      // BorderFactory.createLineBorder(Color.gray);
-      // private final Border ETCHED = new EtchedBorder(Color.black,
-      // Color.gray);
       public final Dimension size = new Dimension(120, 30);
       private Yahtzee_Listener listener = new Yahtzee_Listener();
       public JButton[] scores;
@@ -488,6 +524,7 @@ public class Yahtzee_GUI extends JFrame
          add(new JLabel("  "));
          setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
          JPanel choices = new JPanel(new GridLayout(15, 1));
+         //Adding the labels to the card
          labels[0] = new JLabel();
          labels[1] = new JLabel(" Ones");
          labels[2] = new JLabel(" Twos");
@@ -522,7 +559,7 @@ public class Yahtzee_GUI extends JFrame
             choices.add(labels[i]);
          }
          add(choices);
-
+         //Adding the buttons to the card
          scores = new JButton[13];
          JPanel player = new JPanel(new GridLayout(15, 1));
          JLabel p = new JLabel(" " + name + " ");
@@ -532,7 +569,6 @@ public class Yahtzee_GUI extends JFrame
          p.setBackground(Color.WHITE);
          p.setOpaque(true);
          player.add(p);
-         // JButton[] scores = new JButton[13];
          for (int j = 0; j < 13; j++) {
             scores[j] = new JButton();
             scores[j].setBackground(Color.white);

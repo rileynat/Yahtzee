@@ -3,14 +3,19 @@ package eecs285.proj4.Yahtzee;
 import java.util.ArrayList;
 import java.util.Date;
 
+//Class that runs the actual server for a Yahtzee game
+//contains a main for this purpose
 public class YahtzeeServer
 {
 
    static ArrayList<PlayerNameAndScore> players;
-
+   
+   //This is the IPAddress used to create the client
+   //It should match whatever ip address the server is runnning
    public final static String IPADDRESS = "67.194.123.241";
    public final static String FXBIPADDRESS = "67.194.113.232";
 
+   //Main function for class
    public static void main(String[] args)
    {
       // TODO Auto-generated method stub
@@ -18,6 +23,8 @@ public class YahtzeeServer
       int numClients = 3;
       int numRound = 0;
 
+      //This code gets all the clients and stores them for later
+      //It also creates the player placeholder players arraylist
       ClientServerSocket theServer;
       String recvdStr;
       theServer = new ClientServerSocket(IPADDRESS, 45548);
@@ -31,7 +38,8 @@ public class YahtzeeServer
          player.score = 0;
          players.add(player);
       }
-
+      
+      //Sending back the player information
       theServer.sendStringToAll("Number players");
       theServer.sendIntToAll(numClients);
 

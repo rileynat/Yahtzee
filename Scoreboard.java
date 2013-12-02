@@ -1,7 +1,11 @@
 package eecs285.proj4.Yahtzee;
 
 import java.util.*;
-
+/*
+   This class keeps track of a players current score and what
+   choices are still available. It also calculates the possible
+   scores a player can get after each roll of the die.
+*/
 public class Scoreboard
 {
 
@@ -16,10 +20,14 @@ public class Scoreboard
       Arrays.fill(available, true);
    }
 
+   //Once a player has chosen what move to make this
+   //saves the new score and disables the player from
+   //making the same move again
    public void insert_new_score(int index, int value)
    {
       total += value;
-      if(value>=100) value -=100;
+      if (value >= 100)
+         value -= 100;
       available[index] = false;
       points[index] = value;
    }
@@ -33,7 +41,8 @@ public class Scoreboard
    {
       return total;
    }
-
+   //A function to calculate a players possibilities
+   //after the player has rolled the die.
    public final int[] get_possible_scores(int dice[])
    {
       int[] possible_scores = new int[13];
@@ -50,25 +59,25 @@ public class Scoreboard
       possible_scores[9] = calculate_ss(dice, available[9]);
       possible_scores[10] = calculate_ls(dice, available[10]);
       possible_scores[11] = calculate_chance(dice, available[11]);
-      if(calculate_Yahtzee(dice)){
-      	if(available[12]){
-      		possible_scores[12]=50;
-      	}else{
-      		if(points[12]==50){
-      			for(int i=0; i < 12; i++){
-      				if(available[i]){
-      					possible_scores[i]+=100;
-      				}
-      			}
-      		}
-      		possible_scores[12]=-1;
-      	}
-      }else{
-      	if(available[12]){
-      		possible_scores[12]=0;
-      	}else{
-      		possible_scores[12]=-1;
-      	}
+      if (calculate_Yahtzee(dice)) {
+         if (available[12]) {
+            possible_scores[12] = 50;
+         } else {
+            if (points[12] == 50) {
+               for (int i = 0; i < 12; i++) {
+                  if (available[i]) {
+                     possible_scores[i] += 100;
+                  }
+               }
+            }
+            possible_scores[12] = -1;
+         }
+      } else {
+         if (available[12]) {
+            possible_scores[12] = 0;
+         } else {
+            possible_scores[12] = -1;
+         }
       }
       return possible_scores;
    }
@@ -85,7 +94,7 @@ public class Scoreboard
       total += 35;
       return true;
    }
-
+   //This calculates the score for ones-sixes
    private int calculate_upper(int dice[], boolean avail, int index)
    {
       if (!avail)
@@ -100,7 +109,8 @@ public class Scoreboard
 
       return score;
    }
-
+   //This calculates the score for three and four of a kind
+   //and Yahtzee
    private int calculate_ofAKind(int dice[], boolean avail, int index)
    {
       if (!avail)
@@ -123,16 +133,18 @@ public class Scoreboard
          return 50;
       return score;
    }
-   
-   private boolean calculate_Yahtzee(int dice[]){
-  	 for(int i=1; i< 5;i++){
-  		 if(dice[0]!=dice[i]){
-  			 return false;
-  		 }
-  	 }
-  	 return true;
+   //This is used to check for bonus Yahtzees
+   private boolean calculate_Yahtzee(int dice[])
+   {
+      for (int i = 1; i < 5; i++) {
+         if (dice[0] != dice[i]) {
+            return false;
+         }
+      }
+      return true;
    }
-
+   //A function to check if the player has a full house
+   //and return the proper score
    private int calculate_fh(int dice[], boolean avail)
    {
       if (!avail)
@@ -166,7 +178,8 @@ public class Scoreboard
 
       return score;
    }
-
+   //A function to check if the player has a small
+   //straight and return the proper score
    private int calculate_ss(int dice[], boolean avail)
    {
       if (!avail)
@@ -200,7 +213,8 @@ public class Scoreboard
 
       return score;
    }
-
+   //A function to check if the player has a large
+   //straight and return the proper score
    private int calculate_ls(int dice[], boolean avail)
    {
       if (!avail)
@@ -220,7 +234,7 @@ public class Scoreboard
 
       return score;
    }
-
+   //Adds up the value of the rolled die
    private int calculate_chance(int dice[], boolean avail)
    {
       if (!avail)
