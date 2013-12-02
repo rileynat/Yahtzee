@@ -11,6 +11,9 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Vector;
 
+//Class to create a server and a socket and send and recieve data back and
+//forth
+
 public class ClientServerSocket
 {
    private String ipAddr;
@@ -21,6 +24,9 @@ public class ClientServerSocket
    ServerSocket serverSock;
    private ArrayList<ServerClient> clients;
 
+   //Constructor for class that takes in an ipaddress and port
+   //all other parts are set to null
+   //used by the server and the clients
    public ClientServerSocket(String inIPAddr, int inPortNum)
    {
       ipAddr = inIPAddr;
@@ -30,6 +36,7 @@ public class ClientServerSocket
       socket = null;
    }
 
+   //function to begin working a client
    public void startClient()
    {
       try {
@@ -44,6 +51,8 @@ public class ClientServerSocket
       }
    }
 
+   //Function to start the server running -- deprecated
+   //Generally not for use except for if there is only one player
    public void startServer()
    {
       ServerSocket serverSock;
@@ -61,6 +70,8 @@ public class ClientServerSocket
       }
    }
 
+   //Used multiple times by the server to get and connect each
+   //client
    public void getClient()
    {
       if (clients == null) {
@@ -85,6 +96,7 @@ public class ClientServerSocket
       }
    }
 
+   //Used by the client only to send a string to the server
    public boolean sendString(String strToSend)
 
    {
@@ -100,6 +112,7 @@ public class ClientServerSocket
       return (success);
    }
 
+   //server side string sending to all the clients it is connected to
    public boolean sendStringToAll(String strToSend)
    // reserved for the server side
    {
@@ -120,6 +133,8 @@ public class ClientServerSocket
       return (success);
    }
 
+   //Server side recieving string that asks the individual client for a
+   //string
    public String waitForString(int currentPlayer)
    // reserved for the server side
    {
@@ -156,6 +171,7 @@ public class ClientServerSocket
       return (receivedString);
    }
 
+   //Client side string recieving that asks only its server
    public String recvString()
    // reserved for the client side
    {
@@ -180,6 +196,8 @@ public class ClientServerSocket
       return (receivedString);
    }
 
+   //Used by the client to get an int from the server and 
+   //returns it
    public int recvInt()
    // reserved for the client side
    {
@@ -193,6 +211,7 @@ public class ClientServerSocket
       return (recvInt);
    }
 
+   //sends an integer client side to the server
    public void sendInt(int inSendInt)
    // reserved for the client side
    {
@@ -204,6 +223,7 @@ public class ClientServerSocket
       }
    }
 
+   //Used by the server to send ints to all its cleints
    public void sendIntToAll(int inSendInt)
    // reserved for the server side
    {
@@ -217,6 +237,8 @@ public class ClientServerSocket
       }
    }
 
+   //Server waiting for an int to be given to it from
+   //the correct client
    public int waitForInt(int currentPlayer)
    // reserved for the server side
    {
@@ -238,6 +260,8 @@ public class ClientServerSocket
       return (recvInt);
    }
 
+   //Inner class used to store the data of an individual client
+   //connection for use by the server
    public class ServerClient
    {
       public ServerSocket serverSock;
