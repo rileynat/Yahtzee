@@ -7,6 +7,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -128,7 +129,10 @@ public class ClientServerSocket
       String receivedString = "";
       for (ServerClient client : clients) {
          try {
+            // socket.setSoTimeout(2000);
+            System.out.println("about to hang!!!!");
             recByte = client.inData.readByte();
+            System.out.println("done hanging");
             while (recByte != 0) {
                byteVec.add(recByte);
                recByte = client.inData.readByte();
@@ -144,6 +148,12 @@ public class ClientServerSocket
          } catch (IOException ioe) {
             out.println("ERROR: waiting for string from socket");
          }
+      }
+      try {
+         socket.setSoTimeout(0);
+      } catch (SocketException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
       }
       return (receivedString);
    }
