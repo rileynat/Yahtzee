@@ -67,6 +67,7 @@ public class YahtzeeServer
                currentDate = new Date();
                System.out.println("testing times");
             }
+            System.out.println(numRound);
             theServer.sendStringToAll("Update Score");
             for (PlayerNameAndScore player : players) {
                theServer.sendIntToAll(player.score);
