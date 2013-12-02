@@ -412,8 +412,8 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                   glass.setVisible(true);
                   client.sendString("Send Score");
                   client.sendString(player_names[this_player_index]);
-                  client.sendString(card.labels[index+1].getText() + 
-                  				" for " + card.scores[index].getText());
+                  client.sendString(card.labels[index+1].getText().trim() + 
+                  				" for " + card.scores[index].getText().trim());
                   client.sendInt(playerScorecard.get_score());
                   get_Server_data();
           }
