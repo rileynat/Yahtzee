@@ -261,7 +261,9 @@ public class Yahtzee_GUI extends JFrame {
 			if("Update Score".equals(recieved_string)){
 				for(int i =0; i < player_names.length ; i++){
 					int score = client.recvInt();
-					player_score_labels[i].setText(score+"");
+					String score_str = Integer.toString(score);
+					player_score_labels[i].setText(score_str);
+					
 				}
 				
 				String in_player_turn = client.recvString();
@@ -321,7 +323,7 @@ public class Yahtzee_GUI extends JFrame {
 					playerScorecard.insert_new_score(i, 
 							Integer.parseInt(score_labels[i].getText()));
 					player_score_labels[this_player_index].setText(
-							playerScorecard.get_score()+"");
+							Integer.toString(playerScorecard.get_score()));
 					score_labels[i].setForeground(Color.gray);
 					end_turn();
 				}
@@ -341,7 +343,7 @@ public class Yahtzee_GUI extends JFrame {
 	private void update_labels(int [] possible_scores){
 		for(int i = 0; i < 13; i++){
 			if(possible_scores[i]!=-1){
-				score_labels[i].setText(possible_scores[i]+"");
+				score_labels[i].setText(Integer.toString(possible_scores[i]));
 			}
 		}
 	}
@@ -349,7 +351,7 @@ public class Yahtzee_GUI extends JFrame {
 	private boolean update_check_bonus(){
 		if(playerScorecard.check_bonus()){
 			player_score_labels[this_player_index].setText(
-					playerScorecard.get_score()+"");
+					Integer.toString(playerScorecard.get_score()));
 			score_labels[13].setText("35");
 			return true;
 		}
