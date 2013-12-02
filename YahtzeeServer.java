@@ -1,6 +1,7 @@
 package eecs285.proj4.Yahtzee;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class YahtzeeServer
 {
@@ -60,6 +61,12 @@ public class YahtzeeServer
             int score = theServer.waitForInt();
             System.out.println(score);
             players.get(currentPlayer).score = score;
+            Date currentDate = new Date();
+            long start_time = currentDate.getTime();
+            while (currentDate.getTime() < start_time + 1000) {
+               currentDate = new Date();
+               System.out.println("testing times");
+            }
             theServer.sendStringToAll("Update Score");
             for (PlayerNameAndScore player : players) {
                theServer.sendIntToAll(player.score);
