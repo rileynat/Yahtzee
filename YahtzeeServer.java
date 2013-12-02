@@ -50,7 +50,7 @@ public class YahtzeeServer
 
       int currentPlayer = 0;
       String str = "";
-      while (numRound < 13 * numClients) {
+      while (numRound < (13 * numClients - 1)) {
          numRound++;
          str = "";
          while (str.equals("")) {
