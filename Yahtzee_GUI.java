@@ -349,9 +349,7 @@ public class Yahtzee_GUI extends JFrame
                   score_str = "Score: " + score_str;
                }
                player_score_labels[i].setText(score_str);
-               if (player_score_labels[i].getText().length() != 10) {
-                  System.out.println("Not fucking long enough");
-               }
+
             }
 
             String in_player_turn = client.recvString();
