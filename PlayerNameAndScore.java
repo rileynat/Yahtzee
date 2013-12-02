@@ -1,5 +1,7 @@
 package eecs285.proj4.Yahtzee;
 
+//Small class to hold some data about a player
+//for use in the server
 public class PlayerNameAndScore
 {
 
