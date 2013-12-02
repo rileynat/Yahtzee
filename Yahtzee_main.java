@@ -12,7 +12,7 @@ public class Yahtzee_main
 {
 
    //IP address that must be modified ot run the program
-   public final static String IPADDRESS = "67.194.123.241";
+   public final static String IPADDRESS = "67.194.117.70";
    public final static String FXBIPADDRESS = "67.194.113.232";
    public static ArrayList<String> playerNames;
 
