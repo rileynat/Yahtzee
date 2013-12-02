@@ -15,7 +15,7 @@ public class YahtzeeServer
    {
       // TODO Auto-generated method stub
       players = new ArrayList<PlayerNameAndScore>();
-      int numClients = 2;
+      int numClients = 1;
       int numRound = 0;
 
       ClientServerSocket theServer;
@@ -51,6 +51,7 @@ public class YahtzeeServer
       int currentPlayer = 0;
       String str = "";
       while (numRound < 13 * numClients) {
+         numRound++;
          str = "";
          while (str.equals("")) {
             str = theServer.waitForString(currentPlayer);
