@@ -12,7 +12,7 @@ public class YahtzeeServer
    
    //This is the IPAddress used to create the client
    //It should match whatever ip address the server is runnning
-   public final static String IPADDRESS = "67.194.123.241";
+   public final static String IPADDRESS = "67.194.117.70";
    public final static String FXBIPADDRESS = "67.194.113.232";
 
    //Main function for class
