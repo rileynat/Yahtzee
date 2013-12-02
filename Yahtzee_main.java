@@ -1,6 +1,7 @@
 package eecs285.proj4.Yahtzee;
 
 import javax.swing.JFrame;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -21,7 +22,7 @@ public class Yahtzee_main {
 	      int numPlayers = 4;
 	      ClientServerSocket client;
 	      playerNames = new ArrayList<String>();
-	      String [] players = {"SpongeBob", "Patrick", "Squidward", "Mr Krabs"};
+	      String [] players = new String[4];
 	      client = new ClientServerSocket(IPADDRESS, 45548);
 	      if (serverInUse) {
 	      client.startClient();

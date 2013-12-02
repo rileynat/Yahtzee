@@ -232,6 +232,7 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                           @Override
                           public void mouseClicked(java.awt.event.MouseEvent e) {
                                   // TODO Auto-generated method stub
+                          	e.consume();
                                   
                           }
 
