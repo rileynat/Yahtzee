@@ -5,9 +5,10 @@ import javax.swing.JFrame;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Yahtzee_main {
-   
-   public final static String IPADDRESS = "67.194.42.41";
+public class Yahtzee_main
+{
+
+   public final static String IPADDRESS = "67.194.123.241";
    public final static String FXBIPADDRESS = "67.194.113.232";
    public static ArrayList<String> playerNames;
 

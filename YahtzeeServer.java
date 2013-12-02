@@ -8,7 +8,7 @@ public class YahtzeeServer
 
    static ArrayList<PlayerNameAndScore> players;
 
-   public final static String IPADDRESS = "67.194.42.41";
+   public final static String IPADDRESS = "67.194.123.241";
    public final static String FXBIPADDRESS = "67.194.113.232";
 
    public static void main(String[] args)
