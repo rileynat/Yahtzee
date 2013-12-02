@@ -15,8 +15,8 @@ public class YahtzeeServer
    {
       // TODO Auto-generated method stub
       players = new ArrayList<PlayerNameAndScore>();
-      int numClients = 2;
-      int numRound = 1;
+      int numClients = 3;
+      int numRound = 0;
 
       ClientServerSocket theServer;
       String recvdStr;
@@ -79,6 +79,18 @@ public class YahtzeeServer
 
          theServer.sendStringToAll(players.get(currentPlayer).name);
       }
+
+      theServer.sendStringToAll("Game Over");
+      int iter = 0;
+      int max = 0;
+      for (int i = 0; i < players.size(); i++) {
+         if (players.get(i).score > max) {
+            iter = i;
+            max = players.get(i).score;
+         }
+      }
+      theServer.sendStringToAll(players.get(iter).name);
+      theServer.sendIntToAll(max);
 
       // System.out.print('\n');
       // theServer.sendInt(timestamp);
