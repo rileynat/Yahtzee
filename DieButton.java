@@ -6,6 +6,9 @@ import java.awt.event.*;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
+/*
+    A button used to roll the die and animate the roll.
+*/
 public class DieButton extends JToggleButton implements ActionListener
 {
 
