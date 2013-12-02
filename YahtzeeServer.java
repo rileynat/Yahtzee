@@ -72,8 +72,8 @@ public class YahtzeeServer
             System.out.println(numRound);
             theServer.sendStringToAll("Update Score");
             theServer.sendStringToAll(players.get(currentPlayer).name);
-            theServer.sendStringToAll("Player: "
-                  + players.get(currentPlayer).name + "\n" + message
+            theServer.sendStringToAll("Player "
+                  + players.get(currentPlayer).name + ":\n" + message
                   + " points");
             for (PlayerNameAndScore player : players) {
                theServer.sendIntToAll(player.score);
