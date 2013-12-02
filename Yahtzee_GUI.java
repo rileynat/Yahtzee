@@ -351,6 +351,11 @@ public class Yahtzee_GUI extends JFrame {
 	}
 	
 	private void end_turn(){
+		for(int i=0; i<5; i++){
+			if(dice.is_die_locked(i)){
+				dice_buttons[i].doClick();
+			}
+		}
 		glass.setVisible(true);
 		repaint();
 		
@@ -358,11 +363,7 @@ public class Yahtzee_GUI extends JFrame {
 			got_bonus = update_check_bonus();
 		}
 		roll_count=0;
-		for(int i=0; i<5; i++){
-			if(dice.is_die_locked(i)){
-				dice_buttons[i].doClick();
-			}
-		}
+
 		//put a glass panel over the UI so that nothing can be touched. 
 		//send back to the network, name and current score. 
 		client.sendString("Send Score");
