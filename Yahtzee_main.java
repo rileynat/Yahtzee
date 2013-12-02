@@ -2,6 +2,7 @@ package eecs285.proj4.Yahtzee;
 
 import javax.swing.JFrame;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 
@@ -61,7 +62,10 @@ public class Yahtzee_main {
 	      }
 	      
 		
-		Yahtzee_GUI gui = new Yahtzee_GUI(numPlayers, 1000, players, myPlayerName, client);
+	      Date cur_date = new Date();
+	      long timestamp = cur_date.getTime();
+	      int rand = (int) timestamp & 0xFFFFFFFF;
+		Yahtzee_GUI gui = new Yahtzee_GUI(numPlayers, rand, players, myPlayerName, client);
 		gui.pack();		
 		gui.setVisible(true);
 		gui.setDefaultCloseOperation(
