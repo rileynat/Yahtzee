@@ -15,7 +15,7 @@ public class YahtzeeServer
    {
       // TODO Auto-generated method stub
       players = new ArrayList<PlayerNameAndScore>();
-      int numClients = 1;
+      int numClients = 2;
       int numRound = 0;
 
       ClientServerSocket theServer;
