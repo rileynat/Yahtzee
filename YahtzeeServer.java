@@ -58,7 +58,7 @@ public class YahtzeeServer
 
          if (str.contains("Score")) {
             str = theServer.waitForString(currentPlayer);
-            int score = theServer.waitForInt();
+            int score = theServer.waitForInt(currentPlayer);
             System.out.println(score);
             players.get(currentPlayer).score = score;
             Date currentDate = new Date();

@@ -217,23 +217,21 @@ public class ClientServerSocket
       }
    }
 
-   public int waitForInt()
+   public int waitForInt(int currentPlayer)
    // reserved for the server side
    {
       int recvInt = 0;
       boolean success = false;
       while (!success) {
-         for (ServerClient client : clients) {
-            try {
-               recvInt = client.inData.readInt();
-               success = true;
-            } catch (IOException ioe) {
-               success = false;
-               // out.println("ERROR: waiting for int from socket");
-            }
-            if (success) {
-               return recvInt;
-            }
+         try {
+            recvInt = clients.get(currentPlayer).inData.readInt();
+            success = true;
+         } catch (IOException ioe) {
+            success = false;
+            // out.println("ERROR: waiting for int from socket");
+         }
+         if (success) {
+            return recvInt;
          }
       }
       // out.printf("recieved int %d\n", recvInt);
