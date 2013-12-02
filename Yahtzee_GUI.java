@@ -260,7 +260,8 @@ public class Yahtzee_GUI extends JFrame {
 			}
 			if("Update Score".equals(recieved_string)){
 				for(int i =0; i < player_names.length ; i++){
-					player_score_labels[i].setText(client.recvInt()+"");
+					int score = client.recvInt();
+					player_score_labels[i].setText(score+"");
 				}
 				
 				String in_player_turn = client.recvString();
@@ -362,17 +363,13 @@ public class Yahtzee_GUI extends JFrame {
 			}
 		}
 		
-
-		
 		if(got_bonus==false){
 			got_bonus = update_check_bonus();
 		}
 		roll_count=0;
-		player_score_labels[this_player_index].setText(playerScorecard.get_score()+"");
 		//put a glass panel over the UI so that nothing can be touched. 
 		//send back to the network, name and current score.
 		glass.setVisible(true);
-		paint(getGraphics());
 		client.sendString("Send Score");
 		client.sendString(player_names[this_player_index]);
 		client.sendInt(playerScorecard.get_score());
