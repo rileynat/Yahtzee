@@ -1,4 +1,4 @@
-package eecs285.proj4.Yahtzee.Yahtzee;
+package eecs285.proj4.Yahtzee;
 
 import java.lang.*;
 import java.awt.Dimension;
