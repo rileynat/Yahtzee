@@ -173,7 +173,7 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                           player_panels[i]= new JPanel( new FlowLayout());
                           player_panels[i].setBorder(
                                           BorderFactory.createTitledBorder(BLACKLINE, players[i]));
-                          player_score_labels[i] = new JLabel("_0_");
+                          player_score_labels[i] = new JLabel("Score:  0");
                           player_panels[i].add(player_score_labels[i]);
                           player_panels[i].setOpaque(false);
                           top_panel.add(player_panels[i]);
@@ -275,9 +275,9 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                         int score = client.recvInt();
                         String score_str = Integer.toString(score);
                         if(score_str.length() ==2){
-                                score_str = "_"+ score_str;
+                                score_str = "Score: " + score_str;
                         }else if (score_str.length()==1){
-                                score_str = "_"+ score_str + "_";
+                                score_str = "Score:  "+ score_str;
                         }
                         player_score_labels[i].setText(score_str);
                 }
