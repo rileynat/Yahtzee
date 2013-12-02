@@ -1,7 +1,11 @@
 package eecs285.proj4.Yahtzee;
 
 import java.util.*;
-
+/*
+   This class keeps track of a players current score and what
+   choices are still available. It also calculates the possible
+   scores a player can get after each roll of the die.
+*/
 public class Scoreboard
 {
 
@@ -16,6 +20,9 @@ public class Scoreboard
       Arrays.fill(available, true);
    }
 
+   //Once a player has chosen what move to make this
+   //saves the new score and disables the player from
+   //making the same move again
    public void insert_new_score(int index, int value)
    {
       total += value;
@@ -34,7 +41,8 @@ public class Scoreboard
    {
       return total;
    }
-
+   //A function to calculate a players possibilities
+   //after the player has rolled the die.
    public final int[] get_possible_scores(int dice[])
    {
       int[] possible_scores = new int[13];
@@ -86,7 +94,7 @@ public class Scoreboard
       total += 35;
       return true;
    }
-
+   //This calculates the score for ones-sixes
    private int calculate_upper(int dice[], boolean avail, int index)
    {
       if (!avail)
@@ -101,7 +109,8 @@ public class Scoreboard
 
       return score;
    }
-
+   //This calculates the score for three and four of a kind
+   //and Yahtzee
    private int calculate_ofAKind(int dice[], boolean avail, int index)
    {
       if (!avail)
@@ -124,7 +133,7 @@ public class Scoreboard
          return 50;
       return score;
    }
-
+   //This is used to check for bonus Yahtzees
    private boolean calculate_Yahtzee(int dice[])
    {
       for (int i = 1; i < 5; i++) {
@@ -134,7 +143,8 @@ public class Scoreboard
       }
       return true;
    }
-
+   //A function to check if the player has a full house
+   //and return the proper score
    private int calculate_fh(int dice[], boolean avail)
    {
       if (!avail)
@@ -168,7 +178,8 @@ public class Scoreboard
 
       return score;
    }
-
+   //A function to check if the player has a small
+   //straight and return the proper score
    private int calculate_ss(int dice[], boolean avail)
    {
       if (!avail)
@@ -202,7 +213,8 @@ public class Scoreboard
 
       return score;
    }
-
+   //A function to check if the player has a large
+   //straight and return the proper score
    private int calculate_ls(int dice[], boolean avail)
    {
       if (!avail)
@@ -222,7 +234,7 @@ public class Scoreboard
 
       return score;
    }
-
+   //Adds up the value of the rolled die
    private int calculate_chance(int dice[], boolean avail)
    {
       if (!avail)
