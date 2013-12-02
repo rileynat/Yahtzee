@@ -56,7 +56,6 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
           private ClientServerSocket client;
           private yahtzee_scorecard card;
           
-          private JPanel glass;
           //this is just a test
           
           private final Border BLACKLINE = BorderFactory.createLineBorder(Color.black);
@@ -73,16 +72,9 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                   in_lock_down = true;
                   getContentPane().setBackground(background_Color);
                   listener = new Yahtzee_Listener();
-                  Glass_Pane_Listener glass_listener = new Glass_Pane_Listener();
                   roll_count = 0;
                   client = inClient;
                   got_bonus=false;
-                  glass = new JPanel();
-                  glass.setPreferredSize(getContentPane().getSize());
-                  glass.addMouseListener(glass_listener);
-                  setGlassPane(glass);
-                  glass.setOpaque(false);
-                  glass.setVisible(true);
                   //dice 
                   player_names = new String[num_players];
                   
@@ -234,38 +226,7 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                   }
           }
           
-          public class Glass_Pane_Listener implements MouseListener{
-                          @Override
-                          public void mouseClicked(java.awt.event.MouseEvent e) {
-                                  // TODO Auto-generated method stub
-                          	e.consume();
-                                  
-                          }
-
-                          @Override
-                          public void mouseEntered(java.awt.event.MouseEvent e) {
-                                  // TODO Auto-generated method stub
-                                  
-                          }
-
-                          @Override
-                          public void mouseExited(java.awt.event.MouseEvent e) {
-                                  // TODO Auto-generated method stub
-                                  
-                          }
-
-                          @Override
-                          public void mousePressed(java.awt.event.MouseEvent e) {
-                                  // TODO Auto-generated method stub
-                                  
-                          }
-
-                          @Override
-                          public void mouseReleased(java.awt.event.MouseEvent e) {
-                                  // TODO Auto-generated method stub
-                                  
-                          }
-          }
+        
           
           //we need a function to listen for news from the network
           //Then it will update all the scores and whose players turn it is
@@ -331,7 +292,6 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
           void start_turn(){
                   //remove the glass panel,
                   //roll the dice, and set the roll button correctly.
-                  glass.setVisible(false);
                   in_lock_down=false;
                   roll_dice();
                   roll_count=1;
@@ -410,15 +370,14 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                                   dice_buttons[i].doClick();
                           }
                   }
-                  
+
+            			in_lock_down = true;
                   if(got_bonus==false){
                           got_bonus = update_check_bonus();
                   }
                   roll_count=0;
                   //put a glass panel over the UI so that nothing can be touched. 
                   //send back to the network, name and current score.
-                  glass.setVisible(true);
-                  in_lock_down = true;
                   client.sendString("Send Score");
                   client.sendString(player_names[this_player_index]);
                   client.sendString(card.labels[index+1].getText().trim() + 

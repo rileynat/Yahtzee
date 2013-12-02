@@ -8,7 +8,14 @@ import java.util.Date;
 public class Yahtzee_main
 {
 
+<<<<<<< HEAD
    public final static String IPADDRESS = "67.194.123.241";
+=======
+
+public class Yahtzee_main {
+   
+   public final static String IPADDRESS = "67.194.42.41";
+>>>>>>> 8a95abdc9bc2d01cfd60d5b16bfb80c8c30b9559
    public final static String FXBIPADDRESS = "67.194.113.232";
    public static ArrayList<String> playerNames;
 
