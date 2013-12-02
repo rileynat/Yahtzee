@@ -40,7 +40,6 @@
                 private ImageIcon[] dice_pictures;
                 private Yahtzee_Listener listener;
                 private JButton [] score_buttons;
-                private JLabel [] score_labels;
                 private JPanel [] player_panels;
                 private JLabel [] player_score_labels;
                 private int roll_count;
@@ -64,7 +63,7 @@
                         super("YAHTZEE");
                         setLayout(new BorderLayout());
                         num_players = _num_players;
-                        card = new yahtzee_scorecard(players);
+
                         
                         getContentPane().setBackground(background_Color);
                         listener = new Yahtzee_Listener();
@@ -85,6 +84,7 @@
                                 player_names[i]= players[i]; 
                                 if(players[i].equals(in_player_name)) this_player_index = i;
                         }
+                        card = new yahtzee_scorecard(players[this_player_index]);
                         roll_button = new JButton("Roll Dice");
                         roll_button.setBackground(button_Color);
                         roll_countJLabel = new JLabel(ROLL_COUNT_STRING + (roll_count+1));
@@ -111,11 +111,6 @@
                                 score_buttons[i].setBackground(button_Color);
                         }
                         
-                        score_labels = new JLabel[14];
-                        for(int i=0;i<14;i++){
-                                score_labels[i] = new JLabel();
-                                score_labels[i].setHorizontalAlignment(SwingConstants.CENTER);
-                        }
                         //players
                         player_panels = new JPanel[num_players];
                         playerScorecard = new Scoreboard(in_player_name);
@@ -193,17 +188,12 @@
                         }
                         JLabel bonus_label = new JLabel("Bonus", SwingConstants.CENTER);
                         score_panel.add(bonus_label);
-                        for(int i = 0; i < 6; i++) {
-                                score_panel.add(score_labels[i]);
-                        }
-                        score_panel.add(score_labels[13]);
+
                         
                         for(int i = 6; i < 13; i++) {
                                 score_panel.add(score_buttons[i]);
                         }                
-                        for(int i=6; i<13; i++){
-                                score_panel.add(score_labels[i]);
-                        }
+
                         //add(score_panel, BorderLayout.CENTER);
                         player_panels[0].setBorder(
                                                                         BorderFactory.createTitledBorder(REDLINE, player_names[0]));
@@ -341,21 +331,19 @@
                 }
                 
                 private void score_buttons_pressed(ActionEvent e){
-                	for(int i = 0; i < num_players; i++) {
                 		for(int j=0;j<13;j++){
-                			if(e.getSource() == card.scores[i][j]){
-                                        if(card.scores[i][j].isEnabled()){
-                                        		card.scores[i][j].setEnabled(false);
-                                                playerScorecard.insert_new_score(j, 
-                                                                Integer.parseInt(score_labels[j].getText()));
-                                                /*player_score_labels[this_player_index].setText(
-                                                                playerScorecard.get_score()+"");*/
-                                                card.scores[i][j].setForeground(Color.black);
-                                                end_turn();
-                                        }
-                                }
+                			if(e.getSource() == card.scores[j]){
+                        if(card.scores[j].isEnabled()){
+                        		card.scores[j].setEnabled(false);
+                                playerScorecard.insert_new_score(j, 
+                                                Integer.parseInt(card.scores[j].getText()));
+                                /*player_score_labels[this_player_index].setText(
+                                                playerScorecard.get_score()+"");*/
+                                card.scores[j].setForeground(Color.black);
+                                end_turn();
                         }
-                    }
+                			}
+                		}
                 }
                 
                 private void update_dice(){
@@ -374,9 +362,8 @@
                 private void update_labels(int [] possible_scores){
                         for(int i = 0; i < 13; i++){
                                 if(possible_scores[i]!=-1){
-                                        score_labels[i].setText(Integer.toString(possible_scores[i]));
-                                    card.scores[this_player_index][i].setText(possible_scores[i]+"");
-                                    card.scores[this_player_index][i].setForeground(Color.red);
+                                    card.scores[i].setText(possible_scores[i]+"");
+                                    card.scores[i].setForeground(Color.red);
                                 }
                         }
                 }
@@ -385,7 +372,6 @@
                         if(playerScorecard.check_bonus()){
                 //                player_score_labels[this_player_index].setText(
                         //                        Integer.toString(playerScorecard.get_score()));
-                                score_labels[13].setText("35");
                                 card.bonusScore.setText("35");
                                 return true;
                         }
@@ -420,16 +406,12 @@
                 	//private final Border ETCHED = new EtchedBorder(Color.black, Color.gray);
                 	public final Dimension size = new Dimension(120, 30);
                 	private Yahtzee_Listener listener = new Yahtzee_Listener();
-                	public String[] names;
-                	public int numPlayers;
-                	public JButton[][] scores;
+                	public JButton[] scores;
                 	public JLabel bonusLabel;
                 	public JLabel bonusScore;
                 	
-                	public yahtzee_scorecard(String[] _names)
+                	public yahtzee_scorecard(String name)
                 	{
-                		names = _names;
-                		numPlayers = names.length;
                 		add(new JLabel("  "));
                 		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
                 		JPanel choices = new JPanel(new GridLayout(15, 1));
@@ -449,13 +431,13 @@
                 		labels[13] = new JLabel(" Yahtzee!");
                 		bonusLabel = new JLabel(" Bonus ");
                 		bonusScore = new JLabel("0");
-            			bonusLabel.setBorder(BLACKLINE);
-            			bonusLabel.setBackground(Color.WHITE);
-            			bonusLabel.setOpaque(true);
-            			bonusScore.setBorder(BLACKLINE);
-            			bonusScore.setBackground(Color.WHITE);
-            			bonusScore.setOpaque(true);
-            			bonusScore.setHorizontalAlignment(SwingConstants.CENTER);
+                		bonusLabel.setBorder(BLACKLINE);
+                		bonusLabel.setBackground(Color.WHITE);
+                		bonusLabel.setOpaque(true);
+                		bonusScore.setBorder(BLACKLINE);
+                		bonusScore.setBackground(Color.WHITE);
+                		bonusScore.setOpaque(true);
+                		bonusScore.setHorizontalAlignment(SwingConstants.CENTER);
                 		
                 		for(int i = 0; i < 14; i++)
                 		{
@@ -469,34 +451,31 @@
                 		}
                 		add(choices);
 
-                		scores = new JButton[1][13];
-                		for(int i = 0; i < 1; i++)
-                		{
-                			JPanel player = new JPanel(new GridLayout(15, 1));
-                			JLabel p = new JLabel(" " + names[this_player_index] + " ");
-                			p.setPreferredSize(new Dimension(90, 30));
-                			p.setHorizontalAlignment(SwingConstants.CENTER);
-                			p.setBorder(BLACKLINE);
-                			p.setBackground(Color.WHITE);
-                			p.setOpaque(true);
-                			player.add(p);
-                			//JButton[] scores = new JButton[13];
-                			for(int j = 0; j < 13; j++)
-                			{
-                				scores[i][j] = new JButton();
-                				scores[i][j].setBackground(Color.white);
-                				scores[i][j].setBorder(BLACKLINE);
-                				scores[i][j].setOpaque(true);
-                				scores[i][j].addActionListener(listener);
-                				scores[i][j].setEnabled(true);
-                				if(j == 6)
-                					player.add(bonusScore);
-                				player.add(scores[i][j]);
-                			}	
-                			add(player);
-                		}setBackground( new Color(85, 200, 50) );
+                		scores = new JButton[13];
+              			JPanel player = new JPanel(new GridLayout(15, 1));
+              			JLabel p = new JLabel(" " + name + " ");
+              			p.setPreferredSize(new Dimension(90, 30));
+              			p.setHorizontalAlignment(SwingConstants.CENTER);
+              			p.setBorder(BLACKLINE);
+              			p.setBackground(Color.WHITE);
+              			p.setOpaque(true);
+              			player.add(p);
+              			//JButton[] scores = new JButton[13];
+              			for(int j = 0; j < 13; j++)
+              			{
+              				scores[j] = new JButton();
+              				scores[j].setBackground(Color.white);
+              				scores[j].setBorder(BLACKLINE);
+              				scores[j].setOpaque(true);
+              				scores[j].addActionListener(listener);
+              				scores[j].setEnabled(true);
+              				if(j == 6)
+              					player.add(bonusScore);
+              				player.add(scores[j]);
+              			}	
+              			add(player);
+              			setBackground( new Color(85, 200, 50) );
                 		add(new JLabel(" "));
                 	}
                 }
-                
         }
