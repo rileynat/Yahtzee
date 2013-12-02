@@ -268,8 +268,14 @@ public class Yahtzee_GUI extends JFrame {
 					if(player_names[i].equals(in_player_turn)){
 						player_panels[i].setBorder(
 								BorderFactory.createTitledBorder(REDLINE, player_names[i]));
+						
+						if(i-1 < 0) i = player_names.length;
+						player_panels[i-1].setBorder(
+								BorderFactory.createTitledBorder(BLACKLINE, player_names[i-1]));
+						break;
 					}
 				}
+				paint(getGraphics());
 				if(player_names[this_player_index].equals(in_player_turn)){
 					break;
 				}
@@ -283,7 +289,6 @@ public class Yahtzee_GUI extends JFrame {
 		//remove the glass panel,
 		//roll the dice, and set the roll button correctly.
 		glass.setVisible(false);
-		repaint();
 		roll_dice();
 		roll_count=1;
 	}
@@ -316,8 +321,8 @@ public class Yahtzee_GUI extends JFrame {
 							Integer.parseInt(score_labels[i].getText()));
 					player_score_labels[this_player_index].setText(
 							playerScorecard.get_score()+"");
-					end_turn();
 					score_labels[i].setForeground(Color.gray);
+					end_turn();
 				}
 			}
 		}
@@ -356,16 +361,18 @@ public class Yahtzee_GUI extends JFrame {
 				dice_buttons[i].doClick();
 			}
 		}
-		glass.setVisible(true);
-		repaint();
+		
+
 		
 		if(got_bonus==false){
 			got_bonus = update_check_bonus();
 		}
 		roll_count=0;
-
+		player_score_labels[this_player_index].setText(playerScorecard.get_score()+"");
 		//put a glass panel over the UI so that nothing can be touched. 
-		//send back to the network, name and current score. 
+		//send back to the network, name and current score.
+		glass.setVisible(true);
+		paint(getGraphics());
 		client.sendString("Send Score");
 		client.sendString(player_names[this_player_index]);
 		client.sendInt(playerScorecard.get_score());
