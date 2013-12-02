@@ -1,4 +1,4 @@
-package eecs285.proj4.Yahtzee;
+package eecs285.proj4.Yahtzee.Yahtzee;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -8,6 +8,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.net.URISyntaxException;
 
@@ -28,7 +30,10 @@ import javax.xml.stream.events.EndDocument;
 
 import org.w3c.dom.events.MouseEvent;
 
-import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
+import eecs285.proj4.Yahtzee.ClientServerSocket;
+import eecs285.proj4.Yahtzee.Dice;
+import eecs285.proj4.Yahtzee.DieButton;
+import eecs285.proj4.Yahtzee.Scoreboard;
 
 //import eecs285.proj4.Yahtzee.Yahtzee_GUI.yahtzee_scorecard;
 
@@ -54,6 +59,8 @@ public class Yahtzee_GUI extends JFrame
    private boolean in_lock_down;
    private ClientServerSocket client;
    private yahtzee_scorecard card;
+   private Yahtzee_Rules_Frame rule_frame; //add this
+   private JButton show_rules; //add this
 
    // this is just a test
 
@@ -148,14 +155,24 @@ public class Yahtzee_GUI extends JFrame
          dice_pic_panel.add(dice_buttons[i]);
          dice_buttons[i].addActionListener(listener);
       }
-
+      
       dice_panel.add(dice_pic_panel, BorderLayout.NORTH);
       JPanel rollPanel = new JPanel(new FlowLayout());
       rollPanel.setOpaque(false);
       rollPanel.add(roll_button);
       rollPanel.add(roll_countJLabel);
-      dice_panel.add(rollPanel, BorderLayout.SOUTH);
-
+      
+      JPanel help_panel = new JPanel(new BorderLayout()); //add this
+      help_panel.add(rollPanel, BorderLayout.CENTER); //add this
+      rule_frame = new Yahtzee_Rules_Frame(); //add this
+      rule_frame.display.addWindowListener(new Rules_Window_Listener()); //add this
+      show_rules = new JButton("Game Info"); //add this
+      show_rules.addActionListener(new Rules_Listener()); //add this
+      help_panel.add(show_rules, BorderLayout.EAST); //add this
+      help_panel.setBackground( new Color(85, 200, 50) ); //add this
+      
+      dice_panel.add(help_panel, BorderLayout.SOUTH); //add this
+      
       add(dice_panel, BorderLayout.SOUTH);
       update_dice();
       roll_button.addActionListener(listener);
@@ -206,6 +223,59 @@ public class Yahtzee_GUI extends JFrame
       mid.add(rightTempLabel);
       // mid.add(tempLabel);
       add(mid, BorderLayout.CENTER);
+   }
+   
+   public class Rules_Listener implements ActionListener{ //add this
+ 	  public void actionPerformed(ActionEvent e) {
+ 		  if(Yahtzee_Rules_Frame.open == false)
+ 		  {
+ 			  rule_frame.display.setVisible(true);
+ 		  }
+ 	  }
+   }
+   public class Rules_Window_Listener implements WindowListener{ //add this
+
+   	  public void windowClosing(WindowEvent e)  
+ 	  {
+  		  Yahtzee_Rules_Frame.open = false;
+ 		  rule_frame.display.setVisible(false);
+ 	  }
+
+		@Override
+		public void windowActivated(WindowEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowClosed(WindowEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowDeactivated(WindowEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowDeiconified(WindowEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowIconified(WindowEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void windowOpened(WindowEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
    }
 
    public class Yahtzee_Listener implements ActionListener
