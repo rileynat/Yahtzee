@@ -29,7 +29,7 @@ import org.w3c.dom.events.MouseEvent;
 public class Yahtzee_GUI extends JFrame {
 	private JButton roll_button;
 	private JLabel roll_countJLabel;
-	private JToggleButton [] dice_buttons;
+	private DieButton [] dice_buttons;
 	private Scoreboard playerScorecard;
 	private Dice dice;
 	private ImageIcon[] dice_pictures;
@@ -79,7 +79,7 @@ public class Yahtzee_GUI extends JFrame {
 		roll_button = new JButton("Roll Dice");
 		roll_button.setBackground(button_Color);
 		roll_countJLabel = new JLabel(ROLL_COUNT_STRING + (roll_count+1));
-		dice_buttons = new JToggleButton[5];
+		dice_buttons = new DieButton[5];
 		dice = new Dice(seed);
 		dice_pictures = new ImageIcon[6];
 		//score
@@ -141,7 +141,7 @@ public class Yahtzee_GUI extends JFrame {
 		JPanel dice_pic_panel = new JPanel(new FlowLayout());
 		dice_pic_panel.setOpaque(false);
 		for(int i = 0; i < 5; i++){
-			dice_buttons[i]= new JToggleButton();
+			dice_buttons[i]= new DieButton(dice_pictures, 6);;
 	
 			dice_pic_panel.add(dice_buttons[i]);
 			dice_buttons[i].addActionListener(listener);
@@ -168,7 +168,7 @@ public class Yahtzee_GUI extends JFrame {
 			player_panels[i]= new JPanel( new FlowLayout());
 			player_panels[i].setBorder(
 					BorderFactory.createTitledBorder(BLACKLINE, players[i]));
-			player_score_labels[i] = new JLabel("0000");
+			player_score_labels[i] = new JLabel("000");
 			player_score_labels[i].setText(" 0 ");
 			player_panels[i].add(player_score_labels[i]);
 			player_panels[i].setOpaque(false);
@@ -337,8 +337,12 @@ public class Yahtzee_GUI extends JFrame {
 	
 	private void update_dice(){
 		int[] dice_values = dice.get_dice_values();
+		int j=0;
 		for(int i=0;i<5;i++){
-			dice_buttons[i].setIcon(dice_pictures[dice_values[i]-1]);
+			if(dice.is_die_locked(i)==false){
+				dice_buttons[i].animate(dice_values[i], 12 + (j*12));
+				j++;
+			}
 		}
 		roll_countJLabel.setText(ROLL_COUNT_STRING + (roll_count+1));
 	}
