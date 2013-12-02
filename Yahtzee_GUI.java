@@ -370,7 +370,7 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                                   dice_buttons[i].doClick();
                           }
                   }
-
+                  roll_countJLabel.setText("Not Your Turn");
             			in_lock_down = true;
                   if(got_bonus==false){
                           got_bonus = update_check_bonus();
