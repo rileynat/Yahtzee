@@ -50,7 +50,7 @@ public class YahtzeeServer
 
       int currentPlayer = 0;
       String str = "";
-      while (numRound < (13 * numClients - 1)) {
+      while (numRound < (13 * numClients)) {
          numRound++;
          str = "";
          while (str.equals("")) {
@@ -77,20 +77,22 @@ public class YahtzeeServer
             currentPlayer = (currentPlayer + 1) % players.size();
          }
 
+         if (numRound == 13 * numClients - 1) {
+            theServer.sendStringToAll("Game Over");
+            int iter = 0;
+            int max = 0;
+            for (int i = 0; i < players.size(); i++) {
+               if (players.get(i).score > max) {
+                  iter = i;
+                  max = players.get(i).score;
+               }
+            }
+            theServer.sendStringToAll(players.get(iter).name);
+            theServer.sendIntToAll(max);
+            break;
+         }
          theServer.sendStringToAll(players.get(currentPlayer).name);
       }
-
-      theServer.sendStringToAll("Game Over");
-      int iter = 0;
-      int max = 0;
-      for (int i = 0; i < players.size(); i++) {
-         if (players.get(i).score > max) {
-            iter = i;
-            max = players.get(i).score;
-         }
-      }
-      theServer.sendStringToAll(players.get(iter).name);
-      theServer.sendIntToAll(max);
 
       // System.out.print('\n');
       // theServer.sendInt(timestamp);
