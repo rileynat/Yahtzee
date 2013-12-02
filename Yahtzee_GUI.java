@@ -109,7 +109,6 @@ public class Yahtzee_GUI extends JFrame {
 		}
 		//players
 		player_panels = new JPanel[num_players];
-		player_score_labels = new JLabel[num_players];
 		playerScorecard = new Scoreboard(in_player_name);
 		
 		//retrieve dice pictures
@@ -169,7 +168,8 @@ public class Yahtzee_GUI extends JFrame {
 			player_panels[i]= new JPanel( new FlowLayout());
 			player_panels[i].setBorder(
 					BorderFactory.createTitledBorder(BLACKLINE, players[i]));
-			player_score_labels[i] = new JLabel("0");
+			player_score_labels[i] = new JLabel("0000");
+			player_score_labels[i].setText(" 0 ");
 			player_panels[i].add(player_score_labels[i]);
 			player_panels[i].setOpaque(false);
 			top_panel.add(player_panels[i]);
@@ -262,8 +262,12 @@ public class Yahtzee_GUI extends JFrame {
 				for(int i =0; i < player_names.length ; i++){
 					int score = client.recvInt();
 					String score_str = Integer.toString(score);
+					if(score_str.length() ==2){
+						score_str+=" ";
+					}else{
+						score_str = " "+ score_str + " ";
+					}
 					player_score_labels[i].setText(score_str);
-					
 				}
 				
 				String in_player_turn = client.recvString();
@@ -322,8 +326,8 @@ public class Yahtzee_GUI extends JFrame {
 					score_buttons[i].setEnabled(false);
 					playerScorecard.insert_new_score(i, 
 							Integer.parseInt(score_labels[i].getText()));
-					player_score_labels[this_player_index].setText(
-							Integer.toString(playerScorecard.get_score()));
+//					player_score_labels[this_player_index].setText(
+	//						Integer.toString(playerScorecard.get_score()));
 					score_labels[i].setForeground(Color.gray);
 					end_turn();
 				}
@@ -350,8 +354,8 @@ public class Yahtzee_GUI extends JFrame {
 	
 	private boolean update_check_bonus(){
 		if(playerScorecard.check_bonus()){
-			player_score_labels[this_player_index].setText(
-					Integer.toString(playerScorecard.get_score()));
+	//		player_score_labels[this_player_index].setText(
+		//			Integer.toString(playerScorecard.get_score()));
 			score_labels[13].setText("35");
 			return true;
 		}
