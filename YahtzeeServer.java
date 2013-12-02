@@ -24,7 +24,7 @@ public class YahtzeeServer
       // theServer.startServer();
       for (int i = 0; i < numClients; i++) {
          theServer.getClient();
-         recvdStr = theServer.waitForString();
+         recvdStr = theServer.waitForString(i);
          System.out.println("Recevied message from client: " + recvdStr);
          PlayerNameAndScore player = new PlayerNameAndScore();
          player.name = recvdStr;
@@ -53,11 +53,11 @@ public class YahtzeeServer
       while (numRound < 13 * numClients) {
          str = "";
          while (str.equals("")) {
-            str = theServer.waitForString();
+            str = theServer.waitForString(currentPlayer);
          }
 
          if (str.contains("Score")) {
-            str = theServer.waitForString();
+            str = theServer.waitForString(currentPlayer);
             int score = theServer.waitForInt();
             System.out.println(score);
             players.get(currentPlayer).score = score;

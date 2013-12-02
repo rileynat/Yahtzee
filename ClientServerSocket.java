@@ -120,34 +120,32 @@ public class ClientServerSocket
       return (success);
    }
 
-   public String waitForString()
+   public String waitForString(int currentPlayer)
    // reserved for the server side
    {
       Vector<Byte> byteVec = new Vector<Byte>();
       byte[] byteAry;
       byte recByte;
       String receivedString = "";
-      for (ServerClient client : clients) {
-         try {
-            // socket.setSoTimeout(2000);
-            System.out.println("about to hang!!!!");
-            recByte = client.inData.readByte();
-            System.out.println("done hanging");
-            while (recByte != 0) {
-               byteVec.add(recByte);
-               recByte = client.inData.readByte();
-            }
-            byteAry = new byte[byteVec.size()];
-            for (int ind = 0; ind < byteVec.size(); ind++) {
-               byteAry[ind] = byteVec.elementAt(ind).byteValue();
-            }
-            receivedString = new String(byteAry);
-            if (receivedString.length() > 0) {
-               return receivedString;
-            }
-         } catch (IOException ioe) {
-            out.println("ERROR: waiting for string from socket");
+      try {
+         // socket.setSoTimeout(2000);
+         System.out.println("about to hang!!!!");
+         recByte = clients.get(currentPlayer).inData.readByte();
+         System.out.println("done hanging");
+         while (recByte != 0) {
+            byteVec.add(recByte);
+            recByte = clients.get(currentPlayer).inData.readByte();
          }
+         byteAry = new byte[byteVec.size()];
+         for (int ind = 0; ind < byteVec.size(); ind++) {
+            byteAry[ind] = byteVec.elementAt(ind).byteValue();
+         }
+         receivedString = new String(byteAry);
+         if (receivedString.length() > 0) {
+            return receivedString;
+         }
+      } catch (IOException ioe) {
+         out.println("ERROR: waiting for string from socket");
       }
       try {
          socket.setSoTimeout(0);
