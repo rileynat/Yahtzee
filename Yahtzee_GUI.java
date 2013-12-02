@@ -1,4 +1,4 @@
-package eecs285.proj4.Yahtzee.Yahtzee;
+package eecs285.proj4.Yahtzee;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
