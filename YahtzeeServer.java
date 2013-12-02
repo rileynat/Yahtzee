@@ -59,8 +59,8 @@ public class YahtzeeServer
 
          if (str.contains("Score")) {
             str = theServer.waitForString(currentPlayer);
-            int score = theServer.waitForInt(currentPlayer);
             String message = theServer.waitForString(currentPlayer);
+            int score = theServer.waitForInt(currentPlayer);
             System.out.println(score);
             players.get(currentPlayer).score = score;
             Date currentDate = new Date();
@@ -74,7 +74,7 @@ public class YahtzeeServer
             theServer.sendStringToAll(players.get(currentPlayer).name);
             theServer.sendStringToAll("Player "
                   + players.get(currentPlayer).name + " got " + message
-                  + "points");
+                  + " points");
             for (PlayerNameAndScore player : players) {
                theServer.sendIntToAll(player.score);
                System.out.println(" " + score);
