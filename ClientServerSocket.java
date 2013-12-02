@@ -50,7 +50,7 @@ public class ClientServerSocket
          serverSock = new ServerSocket(portNum);
          out.println("Waiting for client to connect...");
          socket = serverSock.accept();
-         socket.setSoTimeout(2000);
+         // socket.setSoTimeout(10000);
          outData = new DataOutputStream(socket.getOutputStream());
          inData = new DataInputStream(socket.getInputStream());
          out.println("Client connection accepted");
@@ -72,6 +72,7 @@ public class ClientServerSocket
          }
          out.printf("Waiting for client to connect...\n");
          socket = serverSock.accept();
+         // socket.setSoTimeout(2000);
          ServerClient client = new ServerClient();
          client.outData = new DataOutputStream(socket.getOutputStream());
          client.inData = new DataInputStream(socket.getInputStream());
