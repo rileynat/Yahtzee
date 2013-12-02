@@ -173,7 +173,7 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                           player_panels[i]= new JPanel( new FlowLayout());
                           player_panels[i].setBorder(
                                           BorderFactory.createTitledBorder(BLACKLINE, players[i]));
-                          player_score_labels[i] = new JLabel("000");
+                          player_score_labels[i] = new JLabel("_0_");
                           player_panels[i].add(player_score_labels[i]);
                           player_panels[i].setOpaque(false);
                           top_panel.add(player_panels[i]);
@@ -275,9 +275,9 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                         int score = client.recvInt();
                         String score_str = Integer.toString(score);
                         if(score_str.length() ==2){
-                                score_str = "0"+ score_str;
-                        }else{
-                                score_str = "00"+ score_str;
+                                score_str = "_"+ score_str;
+                        }else if (score_str.length()==1){
+                                score_str = "_"+ score_str + "_";
                         }
                         player_score_labels[i].setText(score_str);
                 }
@@ -298,12 +298,13 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                 if(player_names[this_player_index].equals(in_player_turn)){
                         break;
                 }
-              }else if("Game Over".equals(recieved_string)){
-              	String winner_name = client.recvString();
-              	int winner_score = client.recvInt();
-              	JOptionPane.showMessageDialog(this,"Congradulations " + 
-              			winner_name + "!!\nFinal Score of " + winner_score);
-              	setVisible(false); dispose();
+                if("Game Over".equals(in_player_turn)){
+                	String winner_name = client.recvString();
+                	int winner_score = client.recvInt();
+                	JOptionPane.showMessageDialog(this,"Congradulations " + 
+                			winner_name + "!!\nFinal Score of " + winner_score);
+                	setVisible(false); dispose();
+                }
               }
             }
             start_turn();
