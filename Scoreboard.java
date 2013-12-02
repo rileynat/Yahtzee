@@ -49,7 +49,22 @@ public class Scoreboard
       possible_scores[9] = calculate_ss(dice, available[9]);
       possible_scores[10] = calculate_ls(dice, available[10]);
       possible_scores[11] = calculate_chance(dice, available[11]);
-      possible_scores[12] = calculate_ofAKind(dice, available[12], 5);
+      if(calculate_Yahtzee(dice)){
+      	if(available[12]){
+      		possible_scores[12]=50;
+      	}else{
+      		if(points[12]==50){
+      			for(int i=0; i < 12; i++){
+      				if(available[i]){
+      					possible_scores[i]+=100;
+      				}
+      			}
+      		}
+      		possible_scores[12]=-1;
+      	}
+      }else{
+      	possible_scores[12]=0;
+      }
       return possible_scores;
    }
 
@@ -102,6 +117,15 @@ public class Scoreboard
       if (score != 0 && index == 5)
          return 50;
       return score;
+   }
+   
+   private boolean calculate_Yahtzee(int dice[]){
+  	 for(int i=1; i< 5;i++){
+  		 if(dice[0]!=dice[i]){
+  			 return false;
+  		 }
+  	 }
+  	 return true;
    }
 
    private int calculate_fh(int dice[], boolean avail)
