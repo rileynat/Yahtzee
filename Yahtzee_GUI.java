@@ -88,7 +88,7 @@ public class Yahtzee_GUI extends JFrame
       card = new yahtzee_scorecard(players[this_player_index]);
       roll_button = new JButton("Roll Dice");
       roll_button.setBackground(button_Color);
-      roll_countJLabel = new JLabel(ROLL_COUNT_STRING + (roll_count + 1));
+      roll_countJLabel = new JLabel("Not Your Turn");
       dice_buttons = new DieButton[5];
       dice = new Dice(seed);
       dice_pictures = new ImageIcon[6];

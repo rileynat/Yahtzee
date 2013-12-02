@@ -19,6 +19,7 @@ public class Scoreboard
    public void insert_new_score(int index, int value)
    {
       total += value;
+      if(value>=100) value -=100;
       available[index] = false;
       points[index] = value;
    }
@@ -63,7 +64,11 @@ public class Scoreboard
       		possible_scores[12]=-1;
       	}
       }else{
-      	possible_scores[12]=0;
+      	if(available[12]){
+      		possible_scores[12]=0;
+      	}else{
+      		possible_scores[12]=-1;
+      	}
       }
       return possible_scores;
    }

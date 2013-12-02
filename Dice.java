@@ -25,6 +25,7 @@ public class Dice
       for (int i = 0; i < NUMDICE; i++) {
          if (die_locked[i] == false) {
             die_values[i] = randomizer.nextInt(6) + 1;
+
          }
       }
    }
