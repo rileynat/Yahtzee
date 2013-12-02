@@ -8,14 +8,14 @@ public class YahtzeeServer
 
    static ArrayList<PlayerNameAndScore> players;
 
-   public final static String IPADDRESS = "10.0.0.47";
+   public final static String IPADDRESS = "67.194.123.241";
    public final static String FXBIPADDRESS = "67.194.113.232";
 
    public static void main(String[] args)
    {
       // TODO Auto-generated method stub
       players = new ArrayList<PlayerNameAndScore>();
-      int numClients = 3;
+      int numClients = 2;
       int numRound = 0;
 
       ClientServerSocket theServer;
@@ -60,6 +60,7 @@ public class YahtzeeServer
          if (str.contains("Score")) {
             str = theServer.waitForString(currentPlayer);
             int score = theServer.waitForInt(currentPlayer);
+            String message = theServer.waitForString(currentPlayer);
             System.out.println(score);
             players.get(currentPlayer).score = score;
             Date currentDate = new Date();
@@ -70,6 +71,10 @@ public class YahtzeeServer
             }
             System.out.println(numRound);
             theServer.sendStringToAll("Update Score");
+            theServer.sendStringToAll(players.get(currentPlayer).name);
+            theServer.sendStringToAll("Player "
+                  + players.get(currentPlayer).name + " got " + message
+                  + "points");
             for (PlayerNameAndScore player : players) {
                theServer.sendIntToAll(player.score);
                System.out.println(" " + score);
@@ -77,7 +82,7 @@ public class YahtzeeServer
             currentPlayer = (currentPlayer + 1) % players.size();
          }
 
-         if (numRound == 13 * numClients - 1) {
+         if (numRound == 13 * numClients) {
             theServer.sendStringToAll("Game Over");
             int iter = 0;
             int max = 0;
