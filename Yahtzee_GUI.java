@@ -271,6 +271,12 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                       recieved_string = client.recvString();
               }
               if("Update Score".equals(recieved_string)){
+              	String last_player_nameString = client.recvString();
+              	String messageString = client.recvString();
+              	if(!last_player_nameString.equals(player_names[this_player_index])){
+              		JOptionPane.showMessageDialog(this, last_player_nameString + " got " +
+              				messageString + " points!");
+              	}
                 for(int i =0; i < player_names.length ; i++){
                         int score = client.recvInt();
                         String score_str = Integer.toString(score);
@@ -353,7 +359,7 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                           /*player_score_labels[this_player_index].setText(
                                           playerScorecard.get_score()+"");*/
                           card.scores[j].setForeground(Color.black);
-                          end_turn();
+                          end_turn(j);
                   }
           			}
           		}
@@ -391,7 +397,7 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                   return false;
           }
           
-          private void end_turn(){
+          private void end_turn(int index){
                   for(int i=0; i<5; i++){
                           if(dice.is_die_locked(i)){
                                   dice_buttons[i].doClick();
@@ -407,6 +413,8 @@ import eecs285.proj4.Yahtzee.Yahtzee_GUI.Yahtzee_Listener;
                   glass.setVisible(true);
                   client.sendString("Send Score");
                   client.sendString(player_names[this_player_index]);
+                  client.sendString(card.labels[index].getText() + 
+                  				" for " + card.scores[index].getText());
                   client.sendInt(playerScorecard.get_score());
                   get_Server_data();
           }
