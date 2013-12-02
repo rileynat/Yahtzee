@@ -10,6 +10,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+/*
+   A dialog to get the name of the player to display on the GUI
+   of the players.
+*/
 public class PlayerNamesDialog extends JDialog
 {
    // text field for input
