@@ -8,7 +8,7 @@ public class ServerTest
    static ArrayList<playerNameAndScore> players;
 
    public final static String IPADDRESS = "10.0.0.47";
-   //"192.168.1.125";
+   // "192.168.1.125";
    public final static String FXBIPADDRESS = "67.194.113.232";
 
    public static void main(String[] args)
@@ -34,8 +34,8 @@ public class ServerTest
       // theServer.sendInt(~(timestamp & 0xF0F0F0F0));
       // theServer.sendInt(timestamp & 0x0F0F0F0F);
 
-      int starting = theServer.waitForInt();
-      System.out.print(starting);
+      // int starting = theServer.waitForInt();
+      // System.out.print(starting);
    }
 
    public class playerNameAndScore

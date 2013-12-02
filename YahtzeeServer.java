@@ -63,7 +63,7 @@ public class YahtzeeServer
             players.get(currentPlayer).score = score;
             Date currentDate = new Date();
             long start_time = currentDate.getTime();
-            while (currentDate.getTime() < start_time + 3000) {
+            while (currentDate.getTime() < start_time + 1000) {
                currentDate = new Date();
                System.out.println("testing times");
             }
